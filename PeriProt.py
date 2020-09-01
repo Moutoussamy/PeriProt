@@ -36,7 +36,7 @@ def GetArgs():
 
     parser = argparse.ArgumentParser(description='PeriProt Analysis:')
 
-    parser.add_argument('-top', help= "pdb or psf file")
+    parser.add_argument('-top', help= "psf file only")
     parser.add_argument('-traj', help="trajectories (DCD format)")
     parser.add_argument('-hydro',action='store_true', help="Hydrophobic contact analysis")
     parser.add_argument('-hbond', action='store_true', help="hbond analysis")
@@ -62,7 +62,7 @@ def check_extension(file,extensions):
         sys.exit(
         """ERROR: argument not reconized
         REMINDER:
-        top: PSF or PDB file
+        top: only PSF ! NO PDB !s
         traj: only dcd file
         """)
 
@@ -73,7 +73,7 @@ def check_args(psf,dcd):
     :param dcd: Trajectories file (DCD)
     :return: none
     """
-    check_extension(psf,[".psf",".pdb"]) #check extension of topology file
+    check_extension(psf,[".psf"]) #check extension of topology file
     check_extension(dcd, [".dcd"]) #check traj file
 
 
@@ -92,6 +92,28 @@ def get_selection(hbcand,segid_protein):
 
     return candidates,selection
 
+def get_residues_list(psf_file,segidPROT):
+    """
+    Obtain the list of residues that compose the protein
+    :param psf_file: PSF file
+    :param segidPROT: segid of the protein in the PSF filel
+    :return:
+    """
+
+    residues_list = []
+    with open(psf_file) as inputfile:
+        for line in inputfile:
+            line = line.split()
+            if len(line) == 9:
+                if line[1] == segidPROT:
+                    if line[4].replace(" ","") == 'CA':
+                        residues_list.append(line[2])
+
+    return residues_list
+
+
+
+
 def runHbonds(a):
     print("k")
 
@@ -105,6 +127,7 @@ if __name__ == '__main__':
 
     ### HBOND ANALYSIS
     if arguments.hbond:
+        print("Hydrogen bonds Analysis...")
         if arguments.hbcand != "None":
             residues_selection,selection = get_selection(arguments.hbcand,arguments.segprot)
             runHbonds(selection)
@@ -112,8 +135,16 @@ if __name__ == '__main__':
             selection = arguments.segprot
             runHbonds(selection)
 
-    ### HYDROPHOBIC CONTACT
+    ### HYDROPHOBIC CONTACT ANALYSIS
     if arguments.hydro:
-        hydro.HydroCandidateSelection(arguments.segmemb,arguments.segprot,arguments.top)
+        print("Hydrophobic contact calculations...")
+        residues_list = get_residues_list(arguments.top, arguments.segprot)
+        prot_candidates, memb_candidates = hydro.HydroCandidateSelection(arguments.segmemb,\
+                                                                         arguments.segprot,arguments.top)
 
+        hydro.RunHydroAnalysis(arguments.segmemb,arguments.top,arguments.traj,\
+                               residues_list,prot_candidates, memb_candidates)
+
+
+    ### CATION-PI ANALYSIS
 

@@ -3,6 +3,7 @@
 import sys
 import numpy as np
 import  MDAnalysis as mda
+from MDAnalysis.analysis import contacts
 
 """
 SET OF FUNCTION TO EVALUATE HYDROPHOBIC CONTACT
@@ -51,3 +52,71 @@ def HydroCandidateSelection(segidMEMB,segidPROT,psf):
                     prot_hydro_candidates = filterCanditatesAtom(line[4], float(line[6]), prot_hydro_candidates)
 
     return prot_hydro_candidates, memb_hydro_candidates
+
+
+def CountLowerThanCutoff(r,Cutoff):
+    """
+    Count the number of time that we have a distance lower that the cut-off
+    :param r: ditance
+    :param Cutoff: cutoff
+    :return:number of time that we have a distance lower that the cut-off
+    """
+    count = 0
+
+    for distance in r:
+        if distance < Cutoff:
+            count += 1
+
+    return count
+
+def is_any_closer(r, r0, dist=3.0):
+    """
+    find atom close enought to make hydrophobic contact
+    :param r: distance between atoms
+    :param dist: cut-off
+    :return:
+    """
+    return CountLowerThanCutoff(r,dist)
+
+
+def write_hydro_results(avgcontact, residues_list,psf):
+    """
+    write the results of the calculation in a file:
+
+    :param avgcontact: average contact per frame
+    :param residues_list: list of residues
+    :param psf: PSF file
+    :return:
+    """
+    output = open("average_hydrophobic_contact_per_frame.dat","w")
+    output.write("#resid,avg_contact_per_frame\n")
+    for resid in residues_list:
+        output.write("%s,%f\n"%(resid,avgcontact[resid]))
+
+    output.close
+
+def RunHydroAnalysis(segidMEMB,psf,dcd,residues_list,prot_candidates,memb_candidates):
+    """
+    Run calculation of hydrophobic contact using MDanalysis
+    :param segidMEMB: segid of the membrane
+    :param psf: PSF file
+    :param dcd: trajectory file
+    :param residues_list: liste of residues of interest
+    :param prot_candidates: atom candidates in the prot
+    :param memb_candidates: atom candidates in the memb
+    :return:
+    """
+    univers = mda.Universe(psf, dcd)
+    sel_memb = "(name %s) and (segid %s)" % (" ".join(memb_candidates),segidMEMB)
+    memb = univers.select_atoms(sel_memb)
+
+    avgcontact = {}
+
+    for resid in residues_list:
+        sel_prot = "(name %s) and (protein) and (resid %s)" % (" ".join(prot_candidates), str(resid))
+        prot = univers.select_atoms(sel_prot)
+        contacthydro = contacts.Contacts(univers, selection=(sel_memb, sel_prot), method=is_any_closer, refgroup=(memb, prot))
+        contacthydro.run()
+        avgcontact[resid] = np.mean(contacthydro.timeseries[:,1])
+
+    write_hydro_results(avgcontact, residues_list,psf)
