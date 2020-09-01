@@ -16,6 +16,8 @@ __date__ = "2020/08"
 __copyright__ = "CC_by_SA"
 __dependencies__ = "Numpy,MDAnalysis and argparse"
 
-
+def test():
+    print("test")
 
 if __name__ == '__main__':
+    test()
