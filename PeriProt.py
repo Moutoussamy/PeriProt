@@ -5,8 +5,9 @@ import argparse
 import numpy as np
 import  MDAnalysis as mda
 sys.path.insert(0, './lib/')
-import hbond as hbond
+import hbond as hb
 import hydrophobic_contact as hydro
+import depth as dp
 
 """
 PeriProt 1.0
@@ -46,6 +47,9 @@ def GetArgs():
     parser.add_argument('-segmemb', type=str, default='MEMB', help="segid for membrane")
     parser.add_argument('-segprot', type=str, default='PROA', help="segid for protein")
     parser.add_argument('-edp', action='store_true', help="electro density profile")
+    parser.add_argument('-first', type=int, default=0, help="first frame to read")
+    parser.add_argument('-last', type=int, default=10000000, help="last frame to read")
+    parser.add_argument('-skip', type=int, default=1, help="first frame to read")
 
     args = parser.parse_args()
 
@@ -147,4 +151,11 @@ if __name__ == '__main__':
 
 
     ### CATION-PI ANALYSIS
+
+    ### DEPTH
+    if arguments.depth:
+        print("Depth of anchoring calculations...")
+        residues_list = get_residues_list(arguments.top, arguments.segprot)
+        dp.RunDepthOfAnchoring(arguments.top,arguments.traj,residues_list,arguments.segmemb,arguments.first,\
+                               arguments.last,arguments.skip)
 

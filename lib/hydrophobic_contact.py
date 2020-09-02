@@ -93,7 +93,7 @@ def write_hydro_results(avgcontact, residues_list,psf):
     for resid in residues_list:
         output.write("%s,%f\n"%(resid,avgcontact[resid]))
 
-    output.close
+    output.close()
 
 def RunHydroAnalysis(segidMEMB,psf,dcd,residues_list,prot_candidates,memb_candidates):
     """
