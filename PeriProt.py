@@ -50,7 +50,7 @@ def GetArgs():
     parser.add_argument('-first', type=int, default=0, help="first frame to read")
     parser.add_argument('-last', type=int, default=10000000, help="last frame to read")
     parser.add_argument('-skip', type=int, default=1, help="first frame to read")
-
+    parser.add_argument('-out', type=str, default="periprot", help="output name")
     args = parser.parse_args()
 
     return args
@@ -157,5 +157,5 @@ if __name__ == '__main__':
         print("Depth of anchoring calculations...")
         residues_list = get_residues_list(arguments.top, arguments.segprot)
         dp.RunDepthOfAnchoring(arguments.top,arguments.traj,residues_list,arguments.segmemb,arguments.first,\
-                               arguments.last,arguments.skip)
+                               arguments.last,arguments.skip,arguments.out)
 

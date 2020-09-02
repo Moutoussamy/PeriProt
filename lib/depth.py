@@ -87,7 +87,7 @@ def WhereIsTheProtein(univers,segidMEMB,psf):
 
     return good_phos_ids
 
-def write_results_depth(avg,sd,residues_list):
+def write_results_depth(avg,sd,residues_list,outname):
     """
     Wirite the resulst in a file in a csv format
     :param dico_resid: dico conating the DOA
@@ -95,7 +95,7 @@ def write_results_depth(avg,sd,residues_list):
     :return: two list conating the avg. DOA and the associated sd
     """
 
-    output = open("depth_of_anchoring.dat","w")
+    output = open("%s_depth_of_anchoring.dat"%outname,"w")
     output.write("#Resid,DOA_avg,DOA_sd\n")
 
     for i in range(len(residues_list)):
@@ -104,7 +104,7 @@ def write_results_depth(avg,sd,residues_list):
 
     output.close()
 
-def plot_results_depth(avg,sd, residues_list):
+def plot_results_depth(avg,sd, residues_list,outname):
     """
     Plot the results
     :param avg: average DOA
@@ -123,12 +123,12 @@ def plot_results_depth(avg,sd, residues_list):
     sd = np.array(sd)
     residues_list = [float(i) for i in residues_list]
     plt.plot(residues_list,avg,color = "black",linewidth = 1)
-    plt.fill_between(residues_list, avg - sd, avg + sd, alpha=0.3, color="lightblue")
+    plt.fill_between(residues_list, avg - sd, avg + sd, alpha=0.3, color="green")
     plt.xticks(np.arange(min(residues_list), max(residues_list) + 1, 10.0), rotation=45)
     plt.xlabel("Residue")
     plt.ylabel(r"Depth of Anchoring ($\AA$)")
     plt.hlines(0,min(residues_list),max(residues_list))
-    plt.savefig("depth_of_anchoring.png", dpi=300, papertype="a4", orientation="landscape",\
+    plt.savefig("%s_depth_of_anchoring.png"%outname, dpi=300, papertype="a4", orientation="landscape",\
                 format="png", bbox_inches='tight')
 
 def GetAVGandSD(depht_data_frame,residues_list):
@@ -147,7 +147,7 @@ def GetAVGandSD(depht_data_frame,residues_list):
 
     return depth_avg,depth_sd
 
-def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,first_frame,last_frame,skip):
+def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,first_frame,last_frame,skip,outname):
     """
     RUN THE DEPTH OF ANCHORING (DOA) CALCULATION
     :param psf: PSF file
@@ -190,7 +190,7 @@ def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,first_frame,last_frame,s
 
     depth_avg, depth_sd = GetAVGandSD(depht_data_frame,residues_list)
 
-    write_results_depth(depth_avg,depth_sd,residues_list)
-    plot_results_depth(depth_avg,depth_sd,residues_list)
+    write_results_depth(depth_avg,depth_sd,residues_list,outname)
+    plot_results_depth(depth_avg,depth_sd,residues_list,outname)
 
 
