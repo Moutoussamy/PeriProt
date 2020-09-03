@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
+
 import numpy as np
-import  MDAnalysis as mda
 import pandas as pd
+import  MDAnalysis as mda
 import matplotlib.pyplot as plt
 
 """
@@ -147,7 +148,49 @@ def GetAVGandSD(depht_data_frame,residues_list):
 
     return depth_avg,depth_sd
 
-def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,first_frame,last_frame,skip,outname):
+def Mapped(pdb,dico,segid_prot,outname):
+    """
+    Map the dist. on a pdb file
+    :param pdb: a PDB file of a protein/membrane complex
+    :param dico: dico containing data to change
+    :param segid_prot: segid pf the protein
+    :param outname: name of output
+    :return: write a pdb file with the new dada as the B-factor
+    """
+
+    pdbout = "%s_depth_of_anchoring.pdb"%outname
+
+    output = open(pdbout,"w")
+
+    with open(pdb) as inputfile:
+        for line in inputfile:
+            if "ATOM" in line:
+                if segid_prot in line:
+                    resid = str(int(line[22:26]))
+                    extend = line[46:].replace(line[60:66],"%6.2f"%dico[resid])
+                    line = "%s%s"%(line[0:46],extend)
+                    output.write(line)
+
+
+def MapOnPDB(pdb,residues_list,segidPROT,depth_avg,outname):
+
+    """
+    Map dist on PDB
+    :param pdb: pdb file
+    :param residues_list: list of residues
+    :param segidPROT: segid of the protein
+    :param depth_avg: list with the avg depth
+    :param outname: name of the output
+    :return: none
+    """
+    depth_dico = {}
+
+    for i in range(len(residues_list)):
+        depth_dico[residues_list[i]] = depth_avg[i]
+
+    Mapped(pdb,depth_dico,segidPROT,outname)
+
+def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,segidPROT,first_frame,last_frame,skip,outname,pdb):
     """
     RUN THE DEPTH OF ANCHORING (DOA) CALCULATION
     :param psf: PSF file
@@ -192,5 +235,8 @@ def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,first_frame,last_frame,s
 
     write_results_depth(depth_avg,depth_sd,residues_list,outname)
     plot_results_depth(depth_avg,depth_sd,residues_list,outname)
+
+    if pdb != 'None':
+        MapOnPDB(pdb,residues_list,segidPROT,depth_avg,outname)
 
 
