@@ -6,8 +6,10 @@ import numpy as np
 import  MDAnalysis as mda
 sys.path.insert(0, './lib/')
 import hbond as hb
+import common
 import hydrophobic_contact as hydro
 import depth as dp
+import ProtMembDist as pmd
 
 """
 PeriProt 1.0
@@ -44,6 +46,7 @@ def GetArgs():
     parser.add_argument('-hbcand', type=str, default='None', help="hbond candidates")
     parser.add_argument('-catpi', action='store_true', help="cation pi analysis")
     parser.add_argument('-depth', action='store_true', help="depth of anchoring analysis")
+    parser.add_argument('-dist', action='store_true', help="Prot. - Memb distance")
     parser.add_argument('-segmemb', type=str, default='MEMB', help="segid for membrane")
     parser.add_argument('-segprot', type=str, default='PROA', help="segid for protein")
     parser.add_argument('-edp', action='store_true', help="electro density profile")
@@ -97,32 +100,6 @@ def get_selection(hbcand,segid_protein):
 
     return candidates,selection
 
-def get_residues_list(psf_file,segidPROT):
-    """
-    Obtain the list of residues that compose the protein
-    :param psf_file: PSF file
-    :param segidPROT: segid of the protein in the PSF filel
-    :return:
-    """
-
-    residues_list = []
-    with open(psf_file) as inputfile:
-        for line in inputfile:
-            line = line.split()
-            if len(line) == 9:
-                if line[1] == segidPROT:
-                    if line[4].replace(" ","") == 'CA':
-                        residues_list.append(line[2])
-
-    return residues_list
-
-
-
-
-def runHbonds(a):
-    print("k")
-
-
 
 if __name__ == '__main__':
 
@@ -131,19 +108,11 @@ if __name__ == '__main__':
     check_args(arguments.top,arguments.traj)
 
     ### HBOND ANALYSIS
-    if arguments.hbond:
-        print("Hydrogen bonds Analysis...")
-        if arguments.hbcand != "None":
-            residues_selection,selection = get_selection(arguments.hbcand,arguments.segprot)
-            runHbonds(selection)
-        else:
-            selection = arguments.segprot
-            runHbonds(selection)
 
     ### HYDROPHOBIC CONTACT ANALYSIS
     if arguments.hydro:
         print("Hydrophobic contact calculations...")
-        residues_list = get_residues_list(arguments.top, arguments.segprot)
+        residues_list = common.get_residues_list(arguments.top, arguments.segprot)
         prot_candidates, memb_candidates = hydro.HydroCandidateSelection(arguments.segmemb,\
                                                                          arguments.segprot,arguments.top)
 
@@ -156,7 +125,14 @@ if __name__ == '__main__':
     ### DEPTH
     if arguments.depth:
         print("Depth of anchoring calculations...")
-        residues_list = get_residues_list(arguments.top, arguments.segprot)
+        residues_list = common.get_residues_list(arguments.top, arguments.segprot)
         dp.RunDepthOfAnchoring(arguments.top,arguments.traj,residues_list,arguments.segmemb,arguments.segprot,\
                                arguments.first,arguments.last,arguments.skip,arguments.out,arguments.pdb)
+
+
+    ### DISTANCE
+
+    if arguments.dist:
+        pmd.ComputeDistance(arguments.top,arguments.traj,arguments.segprot,arguments.segmemb,arguments.out)
+
 
