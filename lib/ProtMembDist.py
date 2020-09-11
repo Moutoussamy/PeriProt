@@ -30,17 +30,55 @@ def WhichDist():
 
     return whichdist
 
-def CustomSelection():
+def SelProt(prot_sel_criteria):
+    """
+    Ask the user for the index on the protein
+    :param memb_sel_criteria: if memb_sel_criteria < -1: it signal that the user made a mistake on the selection
+    :return: the selected atom on the protein
+    """
+    if prot_sel_criteria < -1:
+        print(" /!\ Achtung! Given atom not in the protein ! /!\ ")
+    selprot = input('Atom ID on the protein: ')  # index for the prot.
+    return selprot
+
+def SelMemb(memb_sel_criteria):
+    """
+    Ask the user for the index on the membrane
+    :param memb_sel_criteria: if memb_sel_criteria < -1: it signal that the user made a mistake on the selection
+    :return: the selected atom on the membrane
+    """
+    if memb_sel_criteria < -1:
+        print(" /!\ Achtung! Given atom not in the Membrane! /!\ ")
+    selmemb = input('Atom ID on the Membrane: ')
+
+    return selmemb
+
+def CustomSelection(psf_info):
     """
     Custom selection for distance calculation (option 3)
     :return: index of atom for the protein and index of atom for the bilayer
     """
-    selprot = input('Atom ID on the protein: ') #index for the prot.
-    selmemb = input('Atom ID on the membrane: ') #index for the memb.
+    prot_sel_criteria = 0
+    memb_sel_criteria = 0
+
+    while(prot_sel_criteria <= 0):
+        ## ASK FOR THE ATOM ON THE PROTEIN AND CHECK IF IT IS REALLY IN THE PROT
+        prot_sel_criteria -= 1
+        selprot = SelProt(prot_sel_criteria)
+
+        if psf_info.protindex[0] <= selprot <= psf_info.protindex[1]:
+            prot_sel_criteria = 1
+
+    while(memb_sel_criteria <= 0):
+        ## ASK FOR THE ATOM ON THE MEMBANRE AND CHECK IF IT IS REALLY IN THE MEMB
+        memb_sel_criteria -= 1
+        selmemb = SelMemb(memb_sel_criteria)
+
+        if psf_info.membindex[0] <= selmemb <= psf_info.membindex[1]:
+            memb_sel_criteria = 1
+
 
     return selprot,selmemb
-
-
 
 
 def WhichSide(psf,segmemb,segprot,univers):
@@ -99,7 +137,7 @@ def plot_results_dist(frames,dist,outname):
                 format="png", bbox_inches='tight')
 
 
-def ComputeDistance(psf,dcd,segprot,segmemb,outname):
+def ComputeDistance(psf,dcd,segprot,segmemb,outname,psf_info):
     """
     Calculate the distance between the protein and the bilayer.
     three type of disatnce are available:
@@ -162,7 +200,7 @@ def ComputeDistance(psf,dcd,segprot,segmemb,outname):
             ###Custom distance between two atoms (one in the prot. and one on the memb.)
 
             if flag == 0:
-                sel_prot,sel_memb = CustomSelection()
+                sel_prot,sel_memb = CustomSelection(psf_info)
                 flag = 1
 
             prot = univers.select_atoms("index %i"%sel_prot)

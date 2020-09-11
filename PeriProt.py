@@ -107,8 +107,7 @@ if __name__ == '__main__':
     print(arguments)
     check_args(arguments.top,arguments.traj)
 
-    x = common.topology(arguments.top, arguments.segmemb, arguments.segprot)
-    print(x,x.protCharge)
+    psf_info = common.topology(arguments.top, arguments.segmemb, arguments.segprot)
 
 
     ### HBOND ANALYSIS
@@ -137,6 +136,6 @@ if __name__ == '__main__':
     ### DISTANCE
 
     if arguments.dist:
-        pmd.ComputeDistance(arguments.top,arguments.traj,arguments.segprot,arguments.segmemb,arguments.out)
+        pmd.ComputeDistance(arguments.top,arguments.traj,arguments.segprot,arguments.segmemb,arguments.out,psf_info)
 
 
