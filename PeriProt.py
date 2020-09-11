@@ -107,6 +107,10 @@ if __name__ == '__main__':
     print(arguments)
     check_args(arguments.top,arguments.traj)
 
+    x = common.topology(arguments.top, arguments.segmemb, arguments.segprot)
+    print(x,x.protCharge)
+
+
     ### HBOND ANALYSIS
 
     ### HYDROPHOBIC CONTACT ANALYSIS
