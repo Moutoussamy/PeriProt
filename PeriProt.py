@@ -84,21 +84,8 @@ def check_args(psf,dcd):
     check_extension(psf,[".psf"]) #check extension of topology file
     check_extension(dcd, [".dcd"]) #check traj file
 
-
-def get_selection(hbcand,segid_protein):
-    candidates = []
-    resid = []
-    with open(hbcand) as inputfile:
-        for line in inputfile:
-            if "#" not in line:
-                line = line.split()
-                if line != []:
-                    candidates.append("%s_%s"%(line[0],line[1]))
-                    resid.append(line[1])
-
-    selection = "segid %s and (resid %s)"%(segid_protein," ".join(resid))
-
-    return candidates,selection
+def done():
+    print("...done")
 
 
 if __name__ == '__main__':
@@ -110,17 +97,34 @@ if __name__ == '__main__':
     psf_info = common.topology(arguments.top, arguments.segmemb, arguments.segprot)
 
 
+
+    if arguments.hydro or arguments.hbond or arguments.catpi :
+        print("Look for lipids close to the protein...")
+        #close_lipids, close_amino_acids = common.GetClosePartner(arguments.top,arguments.traj, arguments.segprot, arguments.segmemb, psf_info)
+
+        close_lipids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 28, 29,\
+                        31, 33, 40, 41, 103, 104, 113, 118, 120, 121, 132, 137, 36, 38, 39, 109, 130, 133, 24, 106,\
+                        112, 134, 142, 50, 131, 135, 26, 235, 98, 94, 140, 155, 244, 115, 146, 42, 93, 25, 32, 250,\
+                        49, 52, 45, 144, 158, 47, 129, 164]
+
+        close_amino_acids = [32, 33, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 69,\
+                             71, 73, 74, 75, 76, 77, 79, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 93, 115, 116, 117,\
+                             118, 119, 120, 121, 122, 123, 124, 125, 180, 181, 199, 200, 201, 202, 203, 204, 205, 206,\
+                             207, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251,\
+                             252, 275, 277, 279, 280, 35, 36, 97, 126, 182, 234, 274, 281, 34, 57, 67, 163, 198, 209,\
+                             232, 58, 72, 254, 276, 278, 178, 179, 255, 258, 177, 208]
+        done()
+
     ### HBOND ANALYSIS
 
     ### HYDROPHOBIC CONTACT ANALYSIS
     if arguments.hydro:
         print("Hydrophobic contact calculations...")
-        residues_list = common.get_residues_list(arguments.top, arguments.segprot)
-        prot_candidates, memb_candidates = hydro.HydroCandidateSelection(arguments.segmemb,\
-                                                                         arguments.segprot,arguments.top)
+        prot_candidates, memb_candidates = hydro.HydroCandidateSelection(psf_info)
+        hydro.RunHydroAnalysis(arguments.top,arguments.traj,psf_info,close_lipids,close_amino_acids,arguments.out,\
+                               arguments.segprot,arguments.pdb)
+        done()
 
-        hydro.RunHydroAnalysis(arguments.segmemb,arguments.top,arguments.traj,\
-                               residues_list,prot_candidates, memb_candidates)
 
 
     ### CATION-PI ANALYSIS
@@ -131,11 +135,13 @@ if __name__ == '__main__':
         residues_list = common.get_residues_list(arguments.top, arguments.segprot)
         dp.RunDepthOfAnchoring(arguments.top,arguments.traj,residues_list,arguments.segmemb,arguments.segprot,\
                                arguments.first,arguments.last,arguments.skip,arguments.out,arguments.pdb)
+        done()
 
 
     ### DISTANCE
 
     if arguments.dist:
         pmd.ComputeDistance(arguments.top,arguments.traj,arguments.segprot,arguments.segmemb,arguments.out,psf_info)
+        done()
 
 

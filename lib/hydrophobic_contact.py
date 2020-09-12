@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-import sys
-import numpy as np
+import common
 import  MDAnalysis as mda
 from MDAnalysis.analysis import contacts
 
@@ -10,92 +9,127 @@ SET OF FUNCTION TO EVALUATE HYDROPHOBIC CONTACT
 """
 
 
-def filterCanditatesAtom(atom_name,charge,candidate_list):
-    """
-    select candidate atoms for hydroiphobic interaction according to their charge
-    charge of carbon should be below 0.3 and absolute charge of hydrogen should be below 0.1
-    :param atom_name: name of the atom
-    :param charge: charge of the atom
-    :param candidate_list: list to append
-    :return: candidtae list append with the appropriate atoms
-    """
-    if atom_name[0] == 'C':
-        if abs(charge) < 0.3:
-            if atom_name not in candidate_list:
-                candidate_list.append(atom_name)
-    elif atom_name[0] == 'H':
-        if abs(charge) < 0.1:
-            if atom_name not in candidate_list:
-                candidate_list.append(atom_name)
 
-    return candidate_list
-
-def HydroCandidateSelection(segidMEMB,segidPROT,psf):
+def HydroCandidateSelection(psf_info):
     """
     Get the selected atoms for hydrophobic contact
-    :param segidMEMB: segid of MEMB
-    :param segidPROT:  segid of PROT
-    :param psf: PSF file
+    :param psf_info: class conating infos about the system (topology from ./lib/common.py)
     :return: list of candiates in the proteion and the membrane
     """
 
     prot_hydro_candidates = []
     memb_hydro_candidates = []
 
-    with open(psf) as inputfile:
-        for line in inputfile:
-            line = line.split()
-            if len(line) == 9:
-                if line[1] == segidMEMB:
-                    memb_hydro_candidates = filterCanditatesAtom(line[4],float(line[6]),memb_hydro_candidates)
-                elif line[1] == segidPROT:
-                    prot_hydro_candidates = filterCanditatesAtom(line[4], float(line[6]), prot_hydro_candidates)
+
+    # FIND CANDIATE ATOM IN THE PROTEIN
+    for res_infos in psf_info.protCharge.keys():
+
+        res_infos_decompose = res_infos.split("_")
+
+        if res_infos_decompose[3][0] == "C":
+            if abs(psf_info.protCharge[res_infos]) < 0.3:
+                if res_infos_decompose[3] not in prot_hydro_candidates:
+                    prot_hydro_candidates.append(res_infos_decompose[3])
+
+        elif res_infos_decompose[3][0] == "H":
+            if abs(psf_info.protCharge[res_infos]) < 0.1:
+                if res_infos_decompose[3] not in prot_hydro_candidates:
+                    prot_hydro_candidates.append(res_infos_decompose[3])
+
+    # FIND CANDIATE ATOM IN THE MEMBRANE
+    for res_infos in psf_info.MembCharge.keys():
+        res_infos_decompose = res_infos.split("_")
+
+        if res_infos_decompose[3][0] == "C":
+            if abs(psf_info.MembCharge[res_infos]) < 0.3:
+                if res_infos_decompose[3] not in memb_hydro_candidates:
+                    memb_hydro_candidates.append(res_infos_decompose[3])
+
+        elif res_infos_decompose[3][0] == "H":
+            if abs(psf_info.MembCharge[res_infos]) < 0.1:
+                if res_infos_decompose[3] not in memb_hydro_candidates:
+                    memb_hydro_candidates.append(res_infos_decompose[3])
 
     return prot_hydro_candidates, memb_hydro_candidates
 
 
-def CountLowerThanCutoff(r,Cutoff):
+def GetNearAtom(close_res,NbAtomPerRes):
     """
-    Count the number of time that we have a distance lower that the cut-off
-    :param r: ditance
-    :param Cutoff: cutoff
-    :return:number of time that we have a distance lower that the cut-off
+    Get atom close to the bilayer based on the residues close to the bilayer
+    :param close_res: list of residues close to the bilayer
+    :param NbAtomPerRes: dico key = residues; value = [fist atom, last atom]
+    :return: list of atoms close to the bilayer
     """
-    count = 0
 
-    for distance in r:
-        if distance < Cutoff:
-            count += 1
+    near_atom = []
+    for residues in close_res:
+        for atomid in range(NbAtomPerRes[residues][0],NbAtomPerRes[residues][1]):
+            near_atom.append(atomid)
 
-    return count
+    return near_atom
 
-def is_any_closer(r, r0, dist=3.0):
+def selectionBasedOnCharge(charge_dico,near_atom_list):
     """
-    find atom close enought to make hydrophobic contact
-    :param r: distance between atoms
-    :param dist: cut-off
+    Select atom based on the charge:
+    if charge(carbon) < 0.3 or charge(hydrogen) < 0.1
+
+    :param charge_dico: dico key = atom id ; value = charge
+    :param near_atom_list: list of atoms close to the bilayer
     :return:
     """
-    return CountLowerThanCutoff(r,dist)
+
+    selected_atom = []
+
+    dico_nb_atom_selected = {}
+
+    for atom_key in charge_dico.keys():
+        atomname = atom_key.split("_")[3]
+        atomid = atom_key.split("_")[2]
+
+        if atomname[0] == "C" and  abs(charge_dico[atom_key]) < 0.3:
+            if int(atomid) in near_atom_list:
+                selected_atom.append(int(atomid))
+
+                if atom_key.split("_")[1] not in dico_nb_atom_selected.keys():
+                    dico_nb_atom_selected[atom_key.split("_")[1]] = 1
+                else:
+                    dico_nb_atom_selected[atom_key.split("_")[1]] += 1
+
+        elif atomname[0] == "H" and abs(charge_dico[atom_key]) < 0.1:
+            if atomid in near_atom_list:
+                selected_atom.append(int(atomid))
+
+                if atom_key.split("_")[1] not in dico_nb_atom_selected.keys():
+                    dico_nb_atom_selected[atom_key.split("_")[1]] = 1
+                else:
+                    dico_nb_atom_selected[atom_key.split("_")[1]] += 1
 
 
-def write_hydro_results(avgcontact, residues_list,psf):
+    return selected_atom
+
+
+def GetCandidate(psf_info,close_lipid,close_prot):
     """
-    write the results of the calculation in a file:
-
-    :param avgcontact: average contact per frame
-    :param residues_list: list of residues
-    :param psf: PSF file
-    :return:
+    Obtain candiate atom for hydrophobic contact analysis
+    :param psf_info: class conating infos about the system (topology from ./lib/common.py)
+    :param close_lipid: lipid close to the bilayer
+    :param close_prot: amino acids close to the bilayer
+    :return: list of candidates for the protein and lkist of candidates for the membrane
     """
-    output = open("average_hydrophobic_contact_per_frame.dat","w")
-    output.write("#resid,avg_contact_per_frame\n")
-    for resid in residues_list:
-        output.write("%s,%f\n"%(resid,avgcontact[resid]))
 
-    output.close()
+    prot_atom_near = GetNearAtom(close_prot,psf_info.NbAtomPerProtRes)
+    prot = selectionBasedOnCharge(psf_info.protCharge,prot_atom_near)
+    prot = sorted(prot)
 
-def RunHydroAnalysis(segidMEMB,psf,dcd,residues_list,prot_candidates,memb_candidates):
+    memb_atom_near = GetNearAtom(close_lipid,psf_info.NbAtomPerLipRes)
+    memb = selectionBasedOnCharge(psf_info.MembCharge,memb_atom_near)
+    memb = sorted(memb)
+
+    return prot,memb
+
+
+
+def RunHydroAnalysis(psf, dcd, psf_info, close_lipid,close_prot,outname,segprot,pdb):
     """
     Run calculation of hydrophobic contact using MDanalysis
     :param segidMEMB: segid of the membrane
@@ -106,17 +140,63 @@ def RunHydroAnalysis(segidMEMB,psf,dcd,residues_list,prot_candidates,memb_candid
     :param memb_candidates: atom candidates in the memb
     :return:
     """
+
+    prot_candidates, memb_candidates = GetCandidate(psf_info, close_lipid, close_prot)
+    prot_candidates = common.convertIntToStr(prot_candidates)
+    memb_candidates = common.convertIntToStr(memb_candidates)
+
     univers = mda.Universe(psf, dcd)
-    sel_memb = "(name %s) and (segid %s)" % (" ".join(memb_candidates),segidMEMB)
-    memb = univers.select_atoms(sel_memb)
 
-    avgcontact = {}
+    counting = {}
+    nbFrame = 0
 
-    for resid in residues_list:
-        sel_prot = "(name %s) and (protein) and (resid %s)" % (" ".join(prot_candidates), str(resid))
+    output_avg = open("%s_average_hydrophobic_contact_per_frame.csv"%outname,"w")
+    output_avg.write("#Residue,AVG_nb_of_contact\n")
+
+    output_raw = open("%s_hydrophobic_contact_raw_data.csv"%outname,"w")
+    output_raw .write("#Frame,ProtResidue,MembRes\n")
+
+    for ts in  univers.trajectory:
+        nbFrame += 1
+        sel_memb = "index %s" % (" ".join(memb_candidates))
+        memb = univers.select_atoms(sel_memb)
+        sel_prot = "index %s" % (" ".join(prot_candidates))
         prot = univers.select_atoms(sel_prot)
-        contacthydro = contacts.Contacts(univers, selection=(sel_memb, sel_prot), method=is_any_closer, refgroup=(memb, prot))
-        contacthydro.run()
-        avgcontact[resid] = np.mean(contacthydro.timeseries[:,1])
+        dist_mat = mda.analysis.distances.distance_array(prot.positions, memb.positions)
 
-    write_hydro_results(avgcontact, residues_list,psf)
+        conctacts =[]
+
+        for i in range(dist_mat.shape[0]):
+            for j in range(dist_mat.shape[1]):
+                if dist_mat[i,j] < 3:
+                    conctacts.append([prot_candidates[i],memb_candidates[j]])
+
+
+        for i in range(len(conctacts)):
+            residues_prot = common.obtainResInfo(int(conctacts[i][0]), psf_info.NbAtomPerProtRes)
+            residues_lipids =  common.obtainResInfo(int(conctacts[i][1]), psf_info.NbAtomPerLipRes)
+
+            if residues_prot not in counting:
+                counting[residues_prot] = 1
+
+            else:
+                counting[residues_prot] += 1
+
+            output_raw.write("%i,%s,%s\n"%(ts.frame,residues_prot,residues_lipids))
+
+
+    for residue in counting.keys():
+        counting[residue] = float(counting[residue])/nbFrame
+
+        output_avg.write("%s,%f\n"%(residue,counting[residue]))
+
+    for residue in psf_info.protresid:
+        if str(residue) not in counting.keys():
+            counting[str(residue)] = 0
+
+    if pdb != 'None':
+        common.Mapped(pdb,counting,segprot,outname,"_average_hydrophobic_contact_per_frame")
+
+
+    output_avg.close()
+    output_raw.close()

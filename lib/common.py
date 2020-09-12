@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import numpy as np
+import  MDAnalysis as mda
+
 '''
 SET OF COMMON FUNCTION for different analysis
 '''
@@ -31,8 +34,10 @@ class topology():
         self.protindex = [0,0]
         self.membindex = [0,0]
         self.protCharge = {}
+        self.MembCharge = {}
         self.mass = {}
-
+        self.NbAtomPerLipRes = {}
+        self.NbAtomPerProtRes = {}
         self.fillTopoStruct(PSF, segidMEMB, segidPROT)
 
     def FillProtInfos(self,psfline):
@@ -42,17 +47,29 @@ class topology():
         :return:
         """
 
+        if self.protindex[0] == 0:
+            self.protindex[0] = int(psfline[0])
+
         if int(psfline[0]) < self.protindex[0]: #find the first atom number of the protein
             self.protindex[0] = int(psfline[0])
 
         if int(psfline[0])  > self.protindex[1]: #find the last atom number of the protein
             self.protindex[1] = int(psfline[0])
 
-        self.protCharge[psfline[0]] = float(psfline[6]) #Collect the charge
-        self.mass[psfline[0]] = float(psfline[7]) #Collect the mass
+        key = "%s_%s_%s_%s"%(psfline[3],psfline[2],psfline[0],psfline[4])
+
+        self.protCharge[key] = float(psfline[6]) #Collect the charge
+        self.mass[key] = float(psfline[7]) #Collect the mass
 
         if int(psfline[2]) not in self.protresid: #Collect the resid
             self.protresid.append(int(psfline[2]))
+
+        if int(psfline[2]) not in self.NbAtomPerProtRes.keys():
+            self.NbAtomPerProtRes[int(psfline[2])] = [int(psfline[0]),int(psfline[0])]
+
+        else:
+            if int(psfline[0]) > self.NbAtomPerProtRes[int(psfline[2])][1]:
+                self.NbAtomPerProtRes[int(psfline[2])][1] = int(psfline[0])
 
 
     def FillMembInfos(self,psfline):
@@ -61,18 +78,31 @@ class topology():
         :param psfline: a line of the PSF file
         :return:
         """
+
+        if self.membindex[0] == 0:
+            self.membindex[0] = int(psfline[0])
+
         if int(psfline[0]) < self.membindex[0]: #find the first atom number of the membrane
             self.membindex[0] = int(psfline[0])
 
         if int(psfline[0])  > self.membindex[1]: #find the last atom number of the membrane
             self.membindex[1] = int(psfline[0])
 
-        self.protCharge[psfline[0]] = float(psfline[6]) #Collect the charge
-        self.mass[psfline[0]] = float(psfline[7]) #Collect the mass
+        key = "%s_%s_%s_%s"%(psfline[3],psfline[2],psfline[0],psfline[4])
+
+        self.MembCharge[key] = float(psfline[6]) #Collect the charge
+        self.mass[key] = float(psfline[7]) #Collect the mass
 
 
         if int(psfline[2]) not in self.membresid: #Collect the resid
             self.membresid.append(int(psfline[2]))
+
+        if int(psfline[2]) not in self.NbAtomPerLipRes.keys():
+            self.NbAtomPerLipRes[int(psfline[2])] = [int(psfline[0]),int(psfline[0])]
+
+        else:
+            if int(psfline[0]) > self.NbAtomPerLipRes[int(psfline[2])][1]:
+                self.NbAtomPerLipRes[int(psfline[2])][1] = int(psfline[0])
 
 
     def Collectinfos(self,psf,segidMEMB,segidPROT):
@@ -106,7 +136,7 @@ class topology():
 
 #FUNCTIONS
 
-def Mapped(pdb,dico,segid_prot,outname):
+def Mapped(pdb,dico,segid_prot,outname,analysis):
     """
     Map the dist. on a pdb file
     :param pdb: a PDB file of a protein/membrane complex
@@ -116,7 +146,7 @@ def Mapped(pdb,dico,segid_prot,outname):
     :return: write a pdb file with the new dada as the B-factor
     """
 
-    pdbout = "%s_depth_of_anchoring.pdb"%outname
+    pdbout = "%s_%s.pdb"%(outname,analysis)
 
     output = open(pdbout,"w")
 
@@ -167,3 +197,79 @@ def get_lipid_resid_list(psf_file,segidMEMB):
                         residues_list.append(line[2])
 
     return residues_list
+
+
+
+def ParseDistanceMatrix(dist_mat,psf_info,closed_lipids,close_amino_acids):
+    """
+    Parse the distance matric in order to select residues and lipids within 7 A
+    :param dist_mat:
+    :param psf_info:
+    :param closed_lipids:
+    :param close_amino_acids:
+    :return:
+    """
+    start_memb = psf_info.membindex[0]
+
+    for resid in psf_info.NbAtomPerLipRes.keys():
+        index_low = psf_info.NbAtomPerLipRes[resid][0] - start_memb
+        index_up = psf_info.NbAtomPerLipRes[resid][1] - start_memb
+
+
+        if np.amin(dist_mat[:,index_low:index_up]) < 7:
+            if resid not in closed_lipids:
+                closed_lipids.append(resid)
+
+
+    for resid in psf_info.NbAtomPerProtRes.keys():
+        index_low = psf_info.NbAtomPerProtRes[resid][0]
+        index_up = psf_info.NbAtomPerProtRes[resid][1]
+
+
+        if np.amin(dist_mat[index_low:index_up,:]) < 7:
+            if resid not in close_amino_acids:
+                close_amino_acids.append(resid)
+
+
+    return closed_lipids,close_amino_acids
+
+
+def GetClosePartner(psf,dcd,segprot,segmemb,psf_info):
+    """
+    Get the lipid close to the prot and the aminoacid close to the bilayer during the simulation
+    :param psf: PSF file
+    :param dcd: trajectory
+    :param segprot: segid of the protein
+    :param segmemb: segid of the membrane
+    :param psf_info: structure containing info about the system
+    :return:
+    """
+    univers = mda.Universe(psf, dcd)
+
+    closed_lipids = []
+    close_amino_acids = []
+
+    for ts in univers.trajectory:
+        prot = univers.select_atoms("segid %s"%segprot)
+        memb = univers.select_atoms("segid %s"%segmemb)
+        dist_mat = mda.analysis.distances.distance_array(prot.positions,memb.positions)
+        closed_lipids, close_amino_acids = ParseDistanceMatrix(dist_mat,psf_info,closed_lipids,close_amino_acids)
+
+
+    return closed_lipids,close_amino_acids
+
+
+def convertIntToStr(list_int):
+
+    list_str = []
+    for i in list_int:
+        list_str.append(str(i))
+
+    return list_str
+
+def obtainResInfo(atomid, NbAtomPerRes):
+
+    for residue in NbAtomPerRes.keys():
+        if NbAtomPerRes[residue][0] < atomid < NbAtomPerRes[residue][1]:
+            return str(residue)
+            break
