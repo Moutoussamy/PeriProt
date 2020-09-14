@@ -47,7 +47,7 @@ The output files:
  - A PDB file ("example_depth_of_anchoring.pdb"). If a PDB file is given on the command line, a new PDB file will be created with the average average DOA during the MD as the B-factor. 
 
 Example of output:
-<center> ![](images/doa_out_example.png "logo" ) <\center>
+ ![](images/doa_out_example.png "logo" )
 
  # Hydrophobic contact analysis
  
