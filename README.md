@@ -74,6 +74,7 @@ The output files:
  - a csv file ("example_cation_pi_int.csv") contating the occupencies of the cation-pi interactions.
  - a PDB file ("example_cation_pi_occupencies.pdb"). If a PDB file is given on the command line, a new PDB file will be created with the average number of hydrophobic contact as the B-factor. 
  
+ Example of output:
  ![](images/cation_pi_out_example.png "catpi" )
 
 
@@ -82,6 +83,23 @@ The output files:
 # (5) Electron density profil
 
 # (6) Protein - Membrane Distance
+
+The protein-Membrane distance can be calculated with Periprot. The user can be should between three different distances. When '-dist' the following dialogue will appears:
+```text
+    Which dist:
+    1: Prot (COM) - Memb (COM) distance
+    2: Prot (COM) - Phosphate Plane (COM) distance
+    3: Custom distance between two atoms (one in the prot. and one on the memb.)
+    
+    Selection:
+```
+
+1: distance between the protein center of mass and the membrane center of mass
+2: distance between the protein center of mass and the phosphate plane center of mass
+3: Custom distance between two atoms (one in the prot. and one on the memb.)
+
+Example of output:
+ ![](images/distance_out_example.png "dist" )
 
 # (7) Macrodipole
 
