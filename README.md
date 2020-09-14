@@ -17,7 +17,9 @@ The available analysis are:
 # Usage
 
 optional arguments:
+
   -h, --help        show this help message and exit
+  
   -top TOP          psf file only
   -traj TRAJ        trajectories (DCD format)
   -hydro            Hydrophobic contact analysis
