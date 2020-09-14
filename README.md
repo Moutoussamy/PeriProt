@@ -16,7 +16,8 @@ The available analysis are:
 
 # Usage
 
-optional arguments:
+  ## ARGUMENTS 
+```text
   -h, --help        show this help message and exit
   -top TOP          psf file only
   -traj TRAJ        trajectories (DCD format)
@@ -34,6 +35,7 @@ optional arguments:
   -skip SKIP        first frame to read
   -out OUT          output name
   -pdb PDB          PDB file
+```
  
  # Hydrophobic contact analysis
  
