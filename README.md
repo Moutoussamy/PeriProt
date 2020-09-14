@@ -17,9 +17,7 @@ The available analysis are:
 # Usage
 
 optional arguments:
-
   -h, --help        show this help message and exit
-  
   -top TOP          psf file only
   -traj TRAJ        trajectories (DCD format)
   -hydro            Hydrophobic contact analysis
@@ -38,5 +36,17 @@ optional arguments:
   -pdb PDB          PDB file
  
  # Hydrophobic contact analysis
+ 
+In Periprot, an hydrophobic contact are consider between to candidates atom (one from the protein and one from the bilayer) if there distance are less than 3 Å. The candidates atom can be picked automatiocally or the user can give his own candidates list.
+
+usage: python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb -hydro -out example
+
+The outputs will two file:
+ - a csv file ("example_hydrophobic_contact_raw_data.csv") contating the raw data (all hydrophobic contact in all frame)
+ - a csv file ("example_average_hydrophobic_contact_per_frame.csv") containg the average number of hydrophobic contact per residues
+ - a pdb file ("example__average_hydrophobic_contact_per_frame.pdb"). If a PDB file is given on the command line, a new PDB file will be created with the average number of hydrophobic contact as the B-factor. 
+ 
+Example of output:
+ 
  
  
