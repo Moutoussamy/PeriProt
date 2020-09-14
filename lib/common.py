@@ -28,7 +28,6 @@ class topology():
         :param segidPROT: Protein segid
         """
 
-        self.protseq = [] # sequence
         self.membresid = []  # sequence
         self.protresid = []
         self.protindex = [0,0]
@@ -40,6 +39,7 @@ class topology():
         self.tryptophanes = []
         self.NbAtomPerLipRes = {}
         self.NbAtomPerProtRes = {}
+
         self.fillTopoStruct(PSF, segidMEMB, segidPROT)
 
     def FillProtInfos(self,psfline):
@@ -269,7 +269,11 @@ def GetClosePartner(psf,dcd,segprot,segmemb,psf_info):
 
 
 def convertIntToStr(list_int):
-
+    """
+    Convert a list of 
+    :param list_int:
+    :return:
+    """
     list_str = []
     for i in list_int:
         list_str.append(str(i))
