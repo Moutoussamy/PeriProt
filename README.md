@@ -6,13 +6,15 @@ Periprot1.0 is a sofware built to analysis Peripheral Membrane Proteins (PMPs) s
 
 The available analysis are:
 
- - Hydrogen bond network analysis (MD)
- - Hydrophobic contact analysis (MD)
- - Cation-Pi interaction analysis (MD)
- - Depth of Anchoring (MD)
- - Protein - Membrane Distances (MD)
- - Electron Density Profil (MD)
- - Macrodipole (PDB structure)
+ - (1) Depth of Anchoring (MD)
+ - (2) Hydrophobic contact analysis (MD)
+ - (3) Cation-Pi interaction analysis (MD)
+ - (4) Hydrogen bond network analysis (MD)
+ - (5) Electron Density Profil (MD)
+ - (6) Protein - Membrane Distances (MD)
+ - (7) Macrodipole (PDB structure)
+
+# Dependencies
 
 # Usage
 
@@ -37,7 +39,7 @@ The available analysis are:
   -pdb PDB          PDB file
 ```
 
- # Depth of Anchoring
+ # (1) Depth of Anchoring
  
 Periprot can be use to calculate the average depth of anchoring (DOA) of each residue in the bilayer. The DOA here represent the distance from the carbon alpha (CA) of the residue and the average phosphate plane. I the CA is below the phosphate plane the DOA will be negative.
 
@@ -47,9 +49,9 @@ The output files:
  - A PDB file ("example_depth_of_anchoring.pdb"). If a PDB file is given on the command line, a new PDB file will be created with the average average DOA during the MD as the B-factor. 
 
 Example of output:
-![](images/doa_out_example.png "logo" )
+ ![](images/doa_out_example.png "logo" )
 
- # Hydrophobic contact analysis
+ # (2) Hydrophobic contact analysis
  
 In Periprot, an hydrophobic contact are consider between to candidates atom (one from the protein and one from the bilayer) if there distance are less than 3 Å. The candidates atom can be picked automatiocally or the user can give his own candidates list.
 
@@ -63,4 +65,13 @@ The output files:
 Example of output:
 ![](images/hydrophobic_out_example.png "logo" )
 
+# (3) Cation-Pi interaction analysis
+
+# (4) Hydrogen bond network analysis
+
+# (5) Electron density profil
+
+# (6) Protein - Membrane Distance
+
+# (7) Macrodipole
 
