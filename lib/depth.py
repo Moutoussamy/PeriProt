@@ -3,7 +3,8 @@
 
 import numpy as np
 import pandas as pd
-import  MDAnalysis as mda
+import common
+import MDAnalysis as mda
 import matplotlib.pyplot as plt
 
 """
@@ -123,12 +124,13 @@ def plot_results_depth(avg,sd, residues_list,outname):
     avg = np.array(avg)
     sd = np.array(sd)
     residues_list = [float(i) for i in residues_list]
-    plt.plot(residues_list,avg,color = "black",linewidth = 1)
-    plt.fill_between(residues_list, avg - sd, avg + sd, alpha=0.3, color="green")
+    plt.plot(residues_list,avg,color = "black",linewidth = 1,label='Average depth of anchoring')
+    plt.fill_between(residues_list, avg - sd, avg + sd, alpha=0.3, color="green",label='Standard deviation')
     plt.xticks(np.arange(min(residues_list), max(residues_list) + 1, 10.0), rotation=45)
     plt.xlabel("Residue")
     plt.ylabel(r"Depth of Anchoring ($\AA$)")
-    plt.hlines(0,min(residues_list),max(residues_list))
+    plt.hlines(0,min(residues_list),max(residues_list),linestyles = 'dashed',label='Phosphate plane')
+    plt.legend()
     plt.savefig("%s_depth_of_anchoring.png"%outname, dpi=300, papertype="a4", orientation="landscape",\
                 format="png", bbox_inches='tight')
 
@@ -148,28 +150,6 @@ def GetAVGandSD(depht_data_frame,residues_list):
 
     return depth_avg,depth_sd
 
-def Mapped(pdb,dico,segid_prot,outname):
-    """
-    Map the dist. on a pdb file
-    :param pdb: a PDB file of a protein/membrane complex
-    :param dico: dico containing data to change
-    :param segid_prot: segid pf the protein
-    :param outname: name of output
-    :return: write a pdb file with the new dada as the B-factor
-    """
-
-    pdbout = "%s_depth_of_anchoring.pdb"%outname
-
-    output = open(pdbout,"w")
-
-    with open(pdb) as inputfile:
-        for line in inputfile:
-            if "ATOM" in line:
-                if segid_prot in line:
-                    resid = str(int(line[22:26]))
-                    extend = line[46:].replace(line[60:66],"%6.2f"%dico[resid])
-                    line = "%s%s"%(line[0:46],extend)
-                    output.write(line)
 
 
 def MapOnPDB(pdb,residues_list,segidPROT,depth_avg,outname):
@@ -188,7 +168,7 @@ def MapOnPDB(pdb,residues_list,segidPROT,depth_avg,outname):
     for i in range(len(residues_list)):
         depth_dico[residues_list[i]] = depth_avg[i]
 
-    Mapped(pdb,depth_dico,segidPROT,outname)
+    common.Mapped(pdb,depth_dico,segidPROT,outname,"_depth_of_anchoring")
 
 def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,segidPROT,first_frame,last_frame,skip,outname,pdb):
     """
@@ -199,14 +179,10 @@ def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,segidPROT,first_frame,la
     :param segidMEMB: membrane segid
     :return: none
     """
-    univers = mda.Universe(psf, dcd)
+    univers = mda.Universe(psf, dcd) #create a MDanalysis universe for the traj
 
-    dico_resid = {}
-    dico_resid = initializeDico(dico_resid,residues_list)
     flag = 0
-
     frame_to_read = first_frame
-
     frames = []
 
     for ts in univers.trajectory:
@@ -214,11 +190,12 @@ def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,segidPROT,first_frame,la
             frames.append(ts.frame)
             if flag == 0:
                 good_phos_ids = WhereIsTheProtein(univers,segidMEMB,psf)
-                phos_plane = univers.select_atoms("segid %s and (resid %s)"%(segidMEMB," ".join(good_phos_ids)))
+                phos_plane = univers.select_atoms("segid %s and (resid %s) and (name P)"%(segidMEMB," ".join(good_phos_ids)))
                 flag = 1
 
 
             prot = univers.select_atoms("(resid %s) and (name CA)" %(" ".join(residues_list)))
+
             z_prot = prot.positions[:,2] - np.mean(phos_plane.positions[:,2])
 
             if 'depht_data_frame' not in locals():
@@ -230,13 +207,11 @@ def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,segidPROT,first_frame,la
             frame_to_read += skip
 
     depht_data_frame = pd.DataFrame(depht_data_frame, columns=residues_list, index=frames)
-
     depth_avg, depth_sd = GetAVGandSD(depht_data_frame,residues_list)
-
     write_results_depth(depth_avg,depth_sd,residues_list,outname)
     plot_results_depth(depth_avg,depth_sd,residues_list,outname)
 
     if pdb != 'None':
         MapOnPDB(pdb,residues_list,segidPROT,depth_avg,outname)
 
-
+    depht_data_frame.to_csv("%s_depth_of_anchoring_raw_data.csv"%outname,header=True)

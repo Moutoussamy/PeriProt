@@ -4,7 +4,10 @@
     <list default="true" id="1ce6c654-e7ea-4cf0-b8ca-3ea4ee7c780f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PeriProt.py" beforeDir="false" afterPath="$PROJECT_DIR$/PeriProt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/cationpi.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/cationpi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/common.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/depth.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/depth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/hbond.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/hbond.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,22 +27,24 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="6" />
+          <entry key="py" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="6" />
+          <entry key="Python" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="10441" />
+          <entry key="dummy" value="2" />
+          <entry key="py" value="25016" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="10441" />
+          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="Python" value="25016" />
         </counts>
       </usages-collector>
     </session>
@@ -49,40 +54,93 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PeriProt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="160" column="31" selection-start-line="160" selection-start-column="31" selection-end-line="160" selection-end-column="31" />
+            <state relative-caret-position="300">
+              <caret line="103" column="8" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="8" />
               <folding>
                 <element signature="e#24#34#0" expanded="true" />
+                <marker date="1600071635410" expanded="true" signature="3354:3378" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/hydrophobic_contact.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="57">
+              <caret line="132" selection-start-line="132" selection-end-line="141" selection-end-column="7" />
+              <folding>
+                <element signature="e#24#37#0" expanded="true" />
+                <marker date="1599946004585" expanded="true" signature="2151:2345" ph="..." />
+                <marker date="1599946004585" expanded="true" signature="2643:3666" ph="..." />
+                <marker date="1599946004585" expanded="true" signature="4149:4432" ph="..." />
+                <marker date="1599946004585" expanded="true" signature="4432:4435" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/ElectronDensityProfile.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/depth.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret selection-end-line="14" />
+              <folding>
+                <element signature="e#25#43#0" expanded="true" />
+                <marker date="1599944092689" expanded="true" signature="5163:5333" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/ProtMembDist.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-42">
+              <caret line="166" column="4" selection-start-line="166" selection-start-column="4" selection-end-line="166" selection-end-column="33" />
+              <folding>
+                <element signature="e#26#39#0" expanded="true" />
+                <marker date="1599824419782" expanded="true" signature="1015:1531" ph="..." />
+                <marker date="1599824419782" expanded="true" signature="1764:2390" ph="..." />
+                <marker date="1599824419782" expanded="true" signature="2745:4205" ph="..." />
+                <marker date="1599824419782" expanded="true" signature="4767:4768" ph="..." />
+                <marker date="1599824419782" expanded="true" signature="4767:6651" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/depth.py">
+        <entry file="file://$PROJECT_DIR$/lib/cationpi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2325">
-              <caret line="155" column="21" selection-start-line="155" selection-start-column="21" selection-end-line="155" selection-end-column="21" />
+            <state relative-caret-position="91">
+              <caret line="6" column="54" selection-start-line="6" selection-start-column="54" selection-end-line="6" selection-end-column="54" />
               <folding>
-                <element signature="e#25#43#0" expanded="true" />
-                <marker date="1599125984447" expanded="true" signature="5801:5942" ph="..." />
+                <element signature="e#25#38#0" expanded="true" />
+                <marker date="1600072094979" expanded="true" signature="542:1878" ph="..." />
+                <marker date="1600072094979" expanded="true" signature="2849:3024" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/cationpi.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/hydrophobic_contact.py">
+        <entry file="file://$PROJECT_DIR$/lib/common.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1755">
-              <caret line="120" selection-start-line="120" selection-end-line="120" />
+            <state relative-caret-position="81">
+              <caret line="147" column="20" selection-start-line="147" selection-start-column="20" selection-end-line="147" selection-end-column="30" />
               <folding>
-                <element signature="e#24#34#0" expanded="true" />
+                <element signature="e#24#42#0" expanded="true" />
+                <marker date="1600067917135" expanded="true" signature="636:637" ph="..." />
               </folding>
             </state>
           </provider>
@@ -91,10 +149,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/hbond.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+            <state relative-caret-position="-5">
+              <caret line="12" column="43" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
               <folding>
-                <marker date="1598871307364" expanded="true" signature="312:332" ph="..." />
+                <element signature="e#24#34#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -109,6 +167,12 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>dico_resid</find>
+      <find>positions</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -117,18 +181,19 @@
       <list>
         <option value="$PROJECT_DIR$/Functions/hbond.py" />
         <option value="$PROJECT_DIR$/lib/hbond.py" />
-        <option value="$PROJECT_DIR$/lib/cationpi.py" />
-        <option value="$PROJECT_DIR$/lib/hydrophobic_contact.py" />
-        <option value="$PROJECT_DIR$/PeriProt.py" />
+        <option value="$PROJECT_DIR$/lib/ElectronDensityProfile.py" />
+        <option value="$PROJECT_DIR$/lib/ProtMembDist.py" />
         <option value="$PROJECT_DIR$/lib/depth.py" />
+        <option value="$PROJECT_DIR$/lib/hydrophobic_contact.py" />
+        <option value="$PROJECT_DIR$/lib/common.py" />
+        <option value="$PROJECT_DIR$/PeriProt.py" />
+        <option value="$PROJECT_DIR$/lib/cationpi.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="117" />
-    <option name="y" value="54" />
-    <option name="width" value="1292" />
-    <option name="height" value="679" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -212,46 +277,93 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Functions/hbond.py" />
-    <entry file="file://$PROJECT_DIR$/lib/hydrophobic_contact.py">
+    <entry file="file://$PROJECT_DIR$/lib/ElectronDensityProfile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1755">
-          <caret line="120" selection-start-line="120" selection-end-line="120" />
-          <folding>
-            <element signature="e#24#34#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/hbond.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+        <state relative-caret-position="-5">
+          <caret line="12" column="43" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
           <folding>
-            <marker date="1598871307364" expanded="true" signature="312:332" ph="..." />
+            <element signature="e#24#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/cationpi.py">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/lib/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="147" column="20" selection-start-line="147" selection-start-column="20" selection-end-line="147" selection-end-column="30" />
+          <folding>
+            <element signature="e#24#42#0" expanded="true" />
+            <marker date="1600067917135" expanded="true" signature="636:637" ph="..." />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PeriProt.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="160" column="31" selection-start-line="160" selection-start-column="31" selection-end-line="160" selection-end-column="31" />
+        <state relative-caret-position="300">
+          <caret line="103" column="8" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="8" />
           <folding>
             <element signature="e#24#34#0" expanded="true" />
+            <marker date="1600071635410" expanded="true" signature="3354:3378" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/hydrophobic_contact.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="132" selection-start-line="132" selection-end-line="141" selection-end-column="7" />
+          <folding>
+            <element signature="e#24#37#0" expanded="true" />
+            <marker date="1599946004585" expanded="true" signature="2151:2345" ph="..." />
+            <marker date="1599946004585" expanded="true" signature="2643:3666" ph="..." />
+            <marker date="1599946004585" expanded="true" signature="4149:4432" ph="..." />
+            <marker date="1599946004585" expanded="true" signature="4432:4435" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/depth.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2325">
-          <caret line="155" column="21" selection-start-line="155" selection-start-column="21" selection-end-line="155" selection-end-column="21" />
+        <state>
+          <caret selection-end-line="14" />
           <folding>
             <element signature="e#25#43#0" expanded="true" />
-            <marker date="1599125984447" expanded="true" signature="5801:5942" ph="..." />
+            <marker date="1599944092689" expanded="true" signature="5163:5333" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ProtMembDist.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-42">
+          <caret line="166" column="4" selection-start-line="166" selection-start-column="4" selection-end-line="166" selection-end-column="33" />
+          <folding>
+            <element signature="e#26#39#0" expanded="true" />
+            <marker date="1599824419782" expanded="true" signature="1015:1531" ph="..." />
+            <marker date="1599824419782" expanded="true" signature="1764:2390" ph="..." />
+            <marker date="1599824419782" expanded="true" signature="2745:4205" ph="..." />
+            <marker date="1599824419782" expanded="true" signature="4767:4768" ph="..." />
+            <marker date="1599824419782" expanded="true" signature="4767:6651" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/cationpi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="6" column="54" selection-start-line="6" selection-start-column="54" selection-end-line="6" selection-end-column="54" />
+          <folding>
+            <element signature="e#25#38#0" expanded="true" />
+            <marker date="1600072094979" expanded="true" signature="542:1878" ph="..." />
+            <marker date="1600072094979" expanded="true" signature="2849:3024" ph="..." />
           </folding>
         </state>
       </provider>

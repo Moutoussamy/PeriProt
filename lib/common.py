@@ -36,6 +36,8 @@ class topology():
         self.protCharge = {}
         self.MembCharge = {}
         self.mass = {}
+        self.tyrosines = []
+        self.tryptophanes = []
         self.NbAtomPerLipRes = {}
         self.NbAtomPerProtRes = {}
         self.fillTopoStruct(PSF, segidMEMB, segidPROT)
@@ -71,6 +73,13 @@ class topology():
             if int(psfline[0]) > self.NbAtomPerProtRes[int(psfline[2])][1]:
                 self.NbAtomPerProtRes[int(psfline[2])][1] = int(psfline[0])
 
+        if psfline[3] == "TYR":
+            if psfline[2] not in self.tyrosines:
+                self.tyrosines.append(psfline[2])
+
+        elif psfline[3] == "TRP":
+            if psfline[2] not in self.tryptophanes:
+                self.tryptophanes.append(psfline[2])
 
     def FillMembInfos(self,psfline):
         """

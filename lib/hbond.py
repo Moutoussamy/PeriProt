@@ -16,8 +16,28 @@ __date__ = "2020/08"
 __copyright__ = "CC_by_SA"
 __dependencies__ = "Numpy,MDAnalysis and argparse"
 
-def test():
-    print("test")
+def hbond_list(rawdata):
+    """
+    This function allow to get additinal ...
+    :param rawdata:
+    :return:
+    """
+    donor = []
+    acceptor = []
+    groups = {}
 
-if __name__ == '__main__':
-    test()
+    with open(rawdata) as inputfile:
+        for line in inputfile:
+            splitted_line = line.split()
+
+            if "!" in line:
+                groups[splitted_line[0]] = splitted_line[1:]
+
+            elif "#donor" in line:
+                donor = splitted_line[1:]
+
+            elif "#acceptor" in line:
+                acceptor = splitted_line[1:]
+
+    return acceptor,donor,groups
+

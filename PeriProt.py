@@ -10,6 +10,7 @@ import common
 import hydrophobic_contact as hydro
 import depth as dp
 import ProtMembDist as pmd
+import cationpi as catpi
 
 """
 PeriProt 1.0
@@ -100,19 +101,19 @@ if __name__ == '__main__':
 
     if arguments.hydro or arguments.hbond or arguments.catpi :
         print("Look for lipids close to the protein...")
-        #close_lipids, close_amino_acids = common.GetClosePartner(arguments.top,arguments.traj, arguments.segprot, arguments.segmemb, psf_info)
+        close_lipids, close_amino_acids = common.GetClosePartner(arguments.top,arguments.traj, arguments.segprot, arguments.segmemb, psf_info)
 
-        close_lipids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 28, 29,\
-                        31, 33, 40, 41, 103, 104, 113, 118, 120, 121, 132, 137, 36, 38, 39, 109, 130, 133, 24, 106,\
-                        112, 134, 142, 50, 131, 135, 26, 235, 98, 94, 140, 155, 244, 115, 146, 42, 93, 25, 32, 250,\
-                        49, 52, 45, 144, 158, 47, 129, 164]
+       # close_lipids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 28, 29,\
+       #                 31, 33, 40, 41, 103, 104, 113, 118, 120, 121, 132, 137, 36, 38, 39, 109, 130, 133, 24, 106,\
+       #                 112, 134, 142, 50, 131, 135, 26, 235, 98, 94, 140, 155, 244, 115, 146, 42, 93, 25, 32, 250,\
+       #                 49, 52, 45, 144, 158, 47, 129, 164]
 
-        close_amino_acids = [32, 33, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 69,\
-                             71, 73, 74, 75, 76, 77, 79, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 93, 115, 116, 117,\
-                             118, 119, 120, 121, 122, 123, 124, 125, 180, 181, 199, 200, 201, 202, 203, 204, 205, 206,\
-                             207, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251,\
-                             252, 275, 277, 279, 280, 35, 36, 97, 126, 182, 234, 274, 281, 34, 57, 67, 163, 198, 209,\
-                             232, 58, 72, 254, 276, 278, 178, 179, 255, 258, 177, 208]
+        #close_amino_acids = [32, 33, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 69,\
+        #                     71, 73, 74, 75, 76, 77, 79, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 93, 115, 116, 117,\
+        #                     118, 119, 120, 121, 122, 123, 124, 125, 180, 181, 199, 200, 201, 202, 203, 204, 205, 206,\
+        #                     207, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251,\
+        #                     252, 275, 277, 279, 280, 35, 36, 97, 126, 182, 234, 274, 281, 34, 57, 67, 163, 198, 209,\
+        #                     232, 58, 72, 254, 276, 278, 178, 179, 255, 258, 177, 208]
         done()
 
     ### HBOND ANALYSIS
@@ -128,6 +129,12 @@ if __name__ == '__main__':
 
 
     ### CATION-PI ANALYSIS
+    print("Cation-Pi interaction calculation...")
+
+    if arguments.catpi:
+        catpi.RunAromatic(arguments.top,arguments.traj,psf_info,arguments.segmemb,close_lipids, close_amino_acids,\
+                          arguments.out,arguments.pdb,arguments.segprot)
+    done()
 
     ### DEPTH
     if arguments.depth:
