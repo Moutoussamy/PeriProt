@@ -74,7 +74,7 @@ The output files:
  - a csv file ("example_cation_pi_int.csv") contating the occupencies of the cation-pi interactions.
  - a PDB file ("example_cation_pi_occupencies.pdb"). If a PDB file is given on the command line, a new PDB file will be created with the average number of hydrophobic contact as the B-factor. 
  
- ![](images/cationpi_out_example.png "catpi" )
+ ![](images/cation_pi_out_example.png "catpi" )
 
 
 # (4) Hydrogen bond network analysis
