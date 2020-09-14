@@ -47,6 +47,7 @@ The outputs will two file:
  - a pdb file ("example__average_hydrophobic_contact_per_frame.pdb"). If a PDB file is given on the command line, a new PDB file will be created with the average number of hydrophobic contact as the B-factor. 
  
 Example of output:
- 
+![](images/hydrophobic_out_example.png "logo" )
+
  
  
