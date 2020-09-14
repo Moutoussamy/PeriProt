@@ -41,7 +41,10 @@ The available analysis are:
 
  # (1) Depth of anchoring
  
+
 Periprot can be use to calculate the average depth of anchoring (DOA) of each residue in the bilayer. The DOA here represent the distance from the carbon alpha (CA) of the residue and the average phosphate plane. I the CA is below the phosphate plane the DOA will be negative.
+
+usage: python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb -depth -out example
 
 The output files:
  - a csv file ("example_depth_of_anchoring.csv") containg the average DOA and the associated standard deviation for each residue
@@ -70,6 +73,8 @@ The cation-pi interaction between tyrosines or tryptophane and the bilayer can b
 
 /!\ Warning: the calculation will be done between PC lipid and the protein, other lipids (PS or PE) will be add later /!\
 
+usage: python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb -catpi -out example
+
 The output files:
  - a csv file ("example_cation_pi_int.csv") contating the occupencies of the cation-pi interactions.
  - a PDB file ("example_cation_pi_occupencies.pdb"). If a PDB file is given on the command line, a new PDB file will be created with the average number of hydrophobic contact as the B-factor. 
@@ -97,6 +102,12 @@ The protein-Membrane distance can be calculated with Periprot. The user can be s
 1: distance between the protein center of mass and the membrane center of mass
 2: distance between the protein center of mass and the phosphate plane center of mass
 3: Custom distance between two atoms (one in the prot. and one on the memb.)
+
+usage: python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb -dist -out example
+
+The output files:
+ - a csv file ("example__prot_memb_distance.csv") contating the prot./memb. distance.
+ - a figure ("example__prot_memb_distance.png"). Distance vs frame
 
 Example of output:
  ![](images/distance_out_example.png "dist" )
