@@ -39,7 +39,7 @@ The available analysis are:
   -pdb PDB          PDB file
 ```
 
- # (1) Depth of Anchoring
+ # (1) Depth of anchoring
  
 Periprot can be use to calculate the average depth of anchoring (DOA) of each residue in the bilayer. The DOA here represent the distance from the carbon alpha (CA) of the residue and the average phosphate plane. I the CA is below the phosphate plane the DOA will be negative.
 
@@ -49,7 +49,7 @@ The output files:
  - A PDB file ("example_depth_of_anchoring.pdb"). If a PDB file is given on the command line, a new PDB file will be created with the average average DOA during the MD as the B-factor. 
 
 Example of output:
- ![](images/doa_out_example.png "logo" )
+ ![](images/doa_out_example.png "DOA" )
 
  # (2) Hydrophobic contact analysis
  
@@ -63,9 +63,19 @@ The output files:
  - a PDB file ("example__average_hydrophobic_contact_per_frame.pdb"). If a PDB file is given on the command line, a new PDB file will be created with the average number of hydrophobic contact as the B-factor. 
  
 Example of output:
-![](images/hydrophobic_out_example.png "logo" )
+![](images/hydrophobic_out_example.png "hydrophobes" )
 
 # (3) Cation-Pi interaction analysis
+The cation-pi interaction between tyrosines or tryptophane and the bilayer can be evaluated using Periprot. The cation-pi interaction is consider when the distances between each carbon of the aromatic cycle and the nitrogen atom of a PC lipid is less that 7 Å. Moreover, these distance should not differ by more than 1.5 Å.
+
+/!\ Warning: the calculation will be done between PC lipid and the protein, other lipids (PS or PE) will be add later /!\
+
+The output files:
+ - a csv file ("example_cation_pi_int.csv") contating the occupencies of the cation-pi interactions.
+ - a PDB file ("example_cation_pi_occupencies.pdb"). If a PDB file is given on the command line, a new PDB file will be created with the average number of hydrophobic contact as the B-factor. 
+ 
+ ![](images/cationpi_out_example.png "catpi" )
+
 
 # (4) Hydrogen bond network analysis
 
