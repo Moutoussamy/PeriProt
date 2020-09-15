@@ -10,9 +10,8 @@ The available analysis are:
  - (2) Hydrophobic contact analysis (MD)
  - (3) Cation-Pi interaction analysis (MD)
  - (4) Hydrogen bond network analysis (MD)
- - (5) Electron Density Profil (MD)
- - (6) Protein - Membrane Distances (MD)
- - (7) Macrodipole (PDB structure)
+ - (5) Protein - Membrane Distances (MD)
+ - (6) Macrodipole (PDB structure)
 
 # Dependencies
 
@@ -84,9 +83,22 @@ The output files:
 
 # (4) Hydrogen bond network analysis
 
-# (5) Electron density profil
+With Periprot, the hydrogen bonds analysis is perform with MD analysis (mda.analysis.hbonds.HydrogenBondAnalysis). The raw date from this function is use to calculate the occupancy of each residue involve in a hbond.
 
-# (6) Protein - Membrane Distance
+/!\ Warning: The donor and acceptor atoms of hbonds in the membrane should be specify in the file: lib/hbond_acceptor_donnor_list_lipids.dat . The donor and acceptor atoms of hbonds for PC and PE lipid is already specified in the file. Other lipid will be add later  /!\
+
+usage: python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb -hbond -out example
+
+The output files:
+ - a csv file ("exampl_hbonds_analysis_raw_data.csv") raw data from mda.analysis.hbonds.HydrogenBondAnalysis
+ - a csv file ("example_hbond_occupancies.csv") containg the occupancy per residue.
+ - a PDB file ("example_hbond_occupancies.pdb"). If a PDB file is given on the command line, a new PDB file will be created with the occupancies as the B-factor. 
+ 
+ Example of output:
+ ![](images/hbond_out_example.png  "hbond" )
+ 
+
+# (5) Protein - Membrane Distance
 
 The protein-Membrane distance can be calculated with Periprot. The user can be should between three different distances. When '-dist' the following dialogue will appears:
 ```text
@@ -111,5 +123,5 @@ The output files:
 Example of output:
  ![](images/distance_out_example.png "dist" )
 
-# (7) Macrodipole
+# (5) Macrodipole
 
