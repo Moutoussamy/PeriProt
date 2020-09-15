@@ -10,9 +10,8 @@ The available analysis are:
  - (2) Hydrophobic contact analysis (MD)
  - (3) Cation-Pi interaction analysis (MD)
  - (4) Hydrogen bond network analysis (MD)
- - (5) Electron Density Profil (MD)
- - (6) Protein - Membrane Distances (MD)
- - (7) Macrodipole (PDB structure)
+ - (5) Protein - Membrane Distances (MD)
+ - (6) Macrodipole (PDB structure)
 
 # Dependencies
 
@@ -99,9 +98,7 @@ The output files:
  ![](images/hbond_out_example.png  "hbond" )
  
 
-# (5) Electron density profil
-
-# (6) Protein - Membrane Distance
+# (5) Protein - Membrane Distance
 
 The protein-Membrane distance can be calculated with Periprot. The user can be should between three different distances. When '-dist' the following dialogue will appears:
 ```text
@@ -126,5 +123,5 @@ The output files:
 Example of output:
  ![](images/distance_out_example.png "dist" )
 
-# (7) Macrodipole
+# (5) Macrodipole
 
