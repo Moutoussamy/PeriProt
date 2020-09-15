@@ -110,9 +110,9 @@ The protein-Membrane distance can be calculated with Periprot. The user can be s
     Selection:
 ```
 
-1: distance between the protein center of mass and the membrane center of mass
-2: distance between the protein center of mass and the phosphate plane center of mass
-3: Custom distance between two atoms (one in the prot. and one on the memb.)
+1) distance between the protein center of mass and the membrane center of mass
+2) distance between the protein center of mass and the phosphate plane center of mass
+3) Custom distance between two atoms (one in the prot. and one on the memb.)
 
 usage: python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb -dist -out example
 
@@ -125,3 +125,5 @@ Example of output:
 
 # (5) Macrodipole
 
+Example of output:
+ ![](images/macrodipole_out_example.png.png "macrodipole" )
