@@ -126,4 +126,4 @@ Example of output:
 # (5) Macrodipole
 
 Example of output:
- ![](images/macrodipole_out_example.png.png "macrodipole" )
+ ![](images/macrodipole_out_example.png "macrodipole" )
