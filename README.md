@@ -129,7 +129,7 @@ usage: python PeriProt.py -top mydata.psf -pdb mydata.pdb -mdipole -out example
 
 The output files:
  - a PDB file ("example_charge_info.pqr") contating the charge as the bfactor column
- - a BILD file ("example_macrodipole_arrow.bild"). Information on the macrodipole. it can be visualize with chimera
+ - a BILD file ("example_macrodipole_arrow.bild"). Information on the macrodipole. It can be visualized with chimera
 
 
 Example of output:
