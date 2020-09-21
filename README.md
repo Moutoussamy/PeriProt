@@ -32,24 +32,63 @@ Following packages are required:
   -traj TRAJ        trajectories (DCD format)
   -hydro            Hydrophobic contact analysis
   -hbond            hbond analysis
-  -hbcand HBCAND    hbond candidates
+  -cand CAND        hbond candidates
   -catpi            cation pi analysis
   -depth            depth of anchoring analysis
   -dist             Prot. - Memb distance
   -segmemb SEGMEMB  segid for membrane
   -segprot SEGPROT  segid for protein
-  -edp              electro density profile
   -first FIRST      first frame to read
   -last LAST        last frame to read
   -skip SKIP        first frame to read
   -out OUT          output name
   -pdb PDB          PDB file
+  -mdipole          Macrodipole calculation
 ```
+
+- top (string):
+topology file (PSF) file. this file is required for all analysis.
+
+- traj (string):
+trajectory file, only DCD file is accepted.
+
+- hydro (boolean):
+If this flag is present the hydrophobic contact interaction will be performed.
+
+- hbond (boolean):
+If this flag is present the hbond interaction analysis will be performed.
+
+- catpi (boolean):
+If this flag is present the cation-pi interaction analysis will be performed.
+
+- depth (boolean):
+If this flag is present the depth of anchoring will be calculated.
+
+- dist (boolean):
+If this flag is present the protein membrane distance will be calculated.
+
+- first (integer):
+First frame to take into account. Default = 0
+
+- last (integer):
+Last frame to take into account. 
+
+- skip (integer):
+Skip frame ? Default = 1
+
+- out (string):
+output name for results. Default = periprot
+
+- pdb (string):
+PDB file of the system
+
+- mdipole (boolean):
+If this flag is present the macrodipole of the protein will be calculated.
+
 
  # (1) Depth of anchoring
  
-
-Periprot can be use to calculate the average depth of anchoring (DOA) of each residue in the bilayer. The DOA here represent the distance from the carbon alpha (CA) of the residue and the average phosphate plane. I the CA is below the phosphate plane the DOA will be negative.
+ Periprot can be use to calculate the average depth of anchoring (DOA) of each residue in the bilayer. The DOA here represent the distance from the carbon alpha (CA) of the residue and the average phosphate plane. I the CA is below the phosphate plane the DOA will be negative.
 
 usage: python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb -depth -out example
 
@@ -143,3 +182,10 @@ The output files:
 
 Example of output:
  ![](images/macrodipole_out_example.png "macrodipole" )
+
+
+# Contact
+
+If you have questions, feel free to contact me:
+mail: e.e.moutoussamy@gmail.com
+
