@@ -23,12 +23,11 @@ def CollectHbondCandInfo():
     :return: donors,acceptors,head,glycerol,phos lists
     """
 
-    donors = []
-    acceptors = []
-    head = []
-    glycerol = []
-    phos = []
-    name = []
+    donors = [] #store donor atoms
+    acceptors = [] # store acceptor atoms
+    head = [] #store head atoms
+    glycerol = [] # store glycerol atoms
+    phos = [] #store phosphate atoms
 
     with open("lib/hbond_acceptor_donnor_list_lipids.dat") as input_file:
         for line in input_file:
@@ -51,9 +50,6 @@ def CollectHbondCandInfo():
             elif "#glycerol" in line:  #Glycerol list
                 glycerol = glycerol + line.split()[1:]
 
-
-            elif "#name" in line:  #resname list
-                name = name + line.split()[1:]
 
     return donors,acceptors,head,glycerol,phos
 
