@@ -102,7 +102,7 @@ The output files:
 
 The protein-Membrane distance can be calculated with Periprot. The user can be should between three different distances. When '-dist' the following dialogue will appears:
 ```text
-    Which dist:
+    Which distance ?:
     1: Prot (COM) - Memb (COM) distance
     2: Prot (COM) - Phosphate Plane (COM) distance
     3: Custom distance between two atoms (one in the prot. and one on the memb.)
@@ -114,7 +114,7 @@ The protein-Membrane distance can be calculated with Periprot. The user can be s
 2) distance between the protein center of mass and the phosphate plane center of mass
 3) Custom distance between two atoms (one in the prot. and one on the memb.)
 
-usage: python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb -dist -out example
+usage: python PeriProt.py -top mydata.psf -traj mydata.dcd -dist -out example
 
 The output files:
  - a csv file ("example__prot_memb_distance.csv") contating the prot./memb. distance.
@@ -124,6 +124,13 @@ Example of output:
  ![](images/distance_out_example.png "dist" )
 
 # (5) Macrodipole
+Periprot can be use to calculate the macrodipole of a PMP:
+usage: python PeriProt.py -top mydata.psf -pdb mydata.pdb -mdipole -out example
+
+The output files:
+ - a PDB file ("example_charge_info.pqr") contating the charge as the bfactor column
+ - a BILD file ("example_macrodipole_arrow.bild"). Information on the macrodipole. it can be visualize with chimera
+
 
 Example of output:
  ![](images/macrodipole_out_example.png "macrodipole" )
