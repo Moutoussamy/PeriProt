@@ -83,8 +83,15 @@ def checkSegID(psf,segprot,segmemb):
 
 
 def PriminilaryCheck(arguments):
-
     if arguments.hydro or arguments.hbond or arguments.catpi or arguments.depth or arguments.dist:
         if arguments.traj == None:
             sys.exit("\nNo DCD file given. Please use -traj flag to specify of dcd file\n")
+
+
+def CheckinghydrophobicContact(lipids_list,our_list_of_lipids):
+
+    for lipid in lipids_list:
+        if lipids_list not in our_list_of_lipids:
+            sys.exit("""\nlipid: %s not reconized. Please fill lib/hydrophobic_candidates_lipid.dat manually or use
+            the script lib/ReadToppar.py\n""")
 

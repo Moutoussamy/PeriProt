@@ -36,6 +36,7 @@ class topology():
         """
 
         self.membresid = []
+        self.lipids = []
         self.protresid = []
         self.protindex = [0,0]
         self.membindex = [0,0]
@@ -115,6 +116,9 @@ class topology():
         else:
             if int(psfline[0]) > self.NbAtomPerLipRes[int(psfline[2])][1]:
                 self.NbAtomPerLipRes[int(psfline[2])][1] = int(psfline[0])
+
+        if psfline[3] not in self.lipids:
+            self.lipids.append(psfline[3])
 
 
     def Collectinfos(self,psf,segidMEMB,segidPROT):

@@ -108,9 +108,9 @@ if __name__ == '__main__':
     ### HYDROPHOBIC CONTACT ANALYSIS
     if arguments.hydro:
         print("Hydrophobic contact calculations...")
-        prot_candidates, memb_candidates = hydro.HydroCandidateSelection(psf_info)
+        #prot_candidates, memb_candidates = hydro.HydroCandidateSelection(psf_info)
         hydro.RunHydroAnalysis(arguments.top,arguments.traj,psf_info,close_lipids,close_amino_acids,arguments.out,\
-                               arguments.segprot,arguments.pdb)
+                               arguments.segprot,arguments.segmemb,arguments.pdb)
         done()
 
 

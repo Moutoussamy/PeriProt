@@ -5,8 +5,7 @@ import pandas as pd
 import  MDAnalysis as mda
 
 """
-PeriProt 1.0
-Hbond Anlaysis
+SET OF FUNCTION TO EVALUATE HYDROPHOBIC CONTACT
 """
 
 __author__ = "Emmanuel Edouard MOUTOUSSAMY"
@@ -118,10 +117,10 @@ def ReadRwData(outname,times):
 
 def Occupancies(times_series_data,nbFrame):
     """
-
-    :param times_series_data:
-    :param nbFrame:
-    :return:
+    Caculate the occupancies of the hbonds
+    :param times_series_data: time series data from Gettime function
+    :param nbFrame: number of frame in the trajectory
+    :return: a dictionary; index = resid and value = occupancy
     """
     occupancy = {}
 
@@ -141,9 +140,9 @@ def Occupancies(times_series_data,nbFrame):
 
 def write_results(occupancies,outname):
     """
-
-    :param occupancies:
-    :param outname:
+    Write the final results in a file
+    :param occupancies: outout of the function Occupancies(times_series_data,nbFrame)
+    :param outname: output name
     :return:
     """
     output = open("%s_hbond_occupancies.csv"%outname,"w")
@@ -156,13 +155,13 @@ def write_results(occupancies,outname):
 
 def runHbond(psf,dcd,outname,resid_list,segprot,pdb):
     """
-
-    :param psf:
-    :param dcd:
-    :param outname:
-    :param resid_list:
-    :param segprot:
-    :param pdb:
+    Run Hbond calculation
+    :param psf: PSF file
+    :param dcd: DCD file
+    :param outname: output name
+    :param resid_list: list of resid in the protein
+    :param segprot: segif of the proetin
+    :param pdb: PDB file
     :return:
     """
     hbonds_data = GetTimeSeries(psf, dcd, outname)

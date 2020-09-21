@@ -4,7 +4,7 @@ import common
 import MDAnalysis as mda
 
 """
-Set of finction to calculate the cation-pi interaction
+SET OF FUNCTION TO CALCULATE THE CATION-PI INTERACTION
 """
 
 TYR = ["CG", "CZ", "CD1", "CD2", "CE2", "CE1"]
