@@ -3,7 +3,7 @@
 import sys
 
 """
-BodyGuard will check input to kick you out if you did something wrong.
+BodyGuard will check input to kick you out if you do something wrong.
 """
 
 __author__ = "Emmanuel Edouard MOUTOUSSAMY"
@@ -32,6 +32,12 @@ def check_extension(file,extensions):
         """)
 
 def ErroMessageSegID(segid,flag):
+    """
+    ERROR MESSAGE IF WRONG SEGID
+    :param segid: segid
+    :param flag: flag for the segid
+    :return:
+    """
 
     message = \
         "\nsegid: {0} not found in the PSF ! You probably used an other segid. Please mention it with the flag: {1}\n"\
@@ -54,6 +60,14 @@ def check_args(psf,dcd,pdb):
 
 
 def checkSegID(psf,segprot,segmemb):
+    """
+    Check if the segid of the protein and the membrane are correct
+    the defaults segid are MEMB for membrane and PROA for protein
+    :param psf: PSF file
+    :param segprot: segid of the protein
+    :param segmemb: segid of the mebrane
+    :return: none
+    """
 
     segids = []
 
@@ -83,15 +97,21 @@ def checkSegID(psf,segprot,segmemb):
 
 
 def PriminilaryCheck(arguments):
+    """
+    Check if the necessary argument are given for the requested analysis
+    :param arguments: list of arguments
+    :return: none
+    """
     if arguments.hydro or arguments.hbond or arguments.catpi or arguments.depth or arguments.dist:
         if arguments.traj == None:
-            sys.exit("\nNo DCD file given. Please use -traj flag to specify of dcd file\n")
+            sys.exit("\nNo DCD file given. Please use -traj flag to specify the DCD file\n")
+        elif arguments.top == None:
+            sys.exit("\nNo PSF file given. Please use -top flag to specify the PSF file\n")
 
 
-def CheckinghydrophobicContact(lipids_list,our_list_of_lipids):
+    if arguments.mdipole:
+        if arguments.top == 'None':
+            sys.exit("\nNo PSF file given. Please use -top flag to specify the PSF file\n")
 
-    for lipid in lipids_list:
-        if lipids_list not in our_list_of_lipids:
-            sys.exit("""\nlipid: %s not reconized. Please fill lib/hydrophobic_candidates_lipid.dat manually or use
-            the script lib/ReadToppar.py\n""")
-
+        if arguments.pdb == 'None':
+            sys.exit("\nNo PDB file given. Please use -pdb flag to specify the PDB file\n")

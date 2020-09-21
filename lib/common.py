@@ -4,7 +4,7 @@ import numpy as np
 import  MDAnalysis as mda
 
 '''
-SET OF COMMON FUNCTION for different analysis
+SET OF COMMON FUNCTIONS FOR THE DIFFERENT ANALYSIS
 '''
 
 AMINO_ACIDS = {'CYS': 'C', 'ASP': 'D', 'SER': 'S', 'GLN': 'Q', 'LYS': 'K',
@@ -12,7 +12,6 @@ AMINO_ACIDS = {'CYS': 'C', 'ASP': 'D', 'SER': 'S', 'GLN': 'Q', 'LYS': 'K',
      'GLY': 'G', 'HIS': 'H', 'LEU': 'L', 'ARG': 'R', 'TRP': 'W',
      'ALA': 'A', 'VAL':'V', 'GLU': 'E', 'TYR': 'Y', 'MET': 'M'}
 
-DICO_MASS_ELECTRON = {'N':5,'H':1,'C':4,'O':6,'S':6,'P':5}
 
 
 #CLASS FOR TOPOLOGY: PSF FILE

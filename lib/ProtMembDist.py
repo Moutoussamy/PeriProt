@@ -17,7 +17,7 @@ def WhichDist():
     """
     whichdist = input("""
     
-    Which dist:
+    Which distance ?:
     1: Prot (COM) - Memb (COM) distance
     2: Prot (COM) - Phosphate Plane (COM) distance
     3: Custom distance between two atoms (one in the prot. and one on the memb.)

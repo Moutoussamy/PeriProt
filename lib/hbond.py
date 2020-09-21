@@ -2,7 +2,9 @@
 
 import common
 import pandas as pd
-import  MDAnalysis as mda
+import MDAnalysis as mda
+from MDAnalysis.analysis import hbonds
+
 
 """
 SET OF FUNCTION TO EVALUATE HYDROPHOBIC CONTACT

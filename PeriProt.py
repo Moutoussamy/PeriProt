@@ -20,45 +20,106 @@ PeriProt is a software allowing to analysis Peripheral Membrane Protein (PMP) in
 during Molecular Dynamics (MD) simulation.
 
 In this version the available tools are:
-- Hbond Analysis: calculate the Hydrogen bond event between the proitein and the bilayer
-- Hydrophobic contact analysis: evaluation of the hydrophobic contact between the protein and the bilayer
-- Cation-pi int. analysis: evaluate cation interaction between the PMP and the membrane
-- Anchoring depth: calculate the depth of anchoring of each residues (avg. during the simulation)
-- electron density profile: calculate the electron density profile (avg. during the simulation)
+1) Hbond Analysis: calculate the Hydrogen bond event between the proitein and the bilayer
+2) Hydrophobic contact analysis: evaluation of the hydrophobic contact between the protein and the bilayer
+3) Cation-pi int. analysis: evaluate cation interaction between the PMP and the membrane
+4) Anchoring depth: calculate the depth of anchoring of each residues (avg. during the simulation)
+5) Prot./Memb. distance: calculate the distance between the protein and the membrane during the simulation
+6) Macrodipole: calculate the macrodipole of the protein
+
+
+Usage:
+  -h, --help        show this help message and exit
+  -top TOP          psf file only
+  -traj TRAJ        trajectories (DCD format)
+  -hydro            Hydrophobic contact analysis
+  -hbond            hbond analysis
+  -hbcand HBCAND    hbond candidates
+  -catpi            cation pi analysis
+  -depth            depth of anchoring analysis
+  -dist             Prot. - Memb distance
+  -segmemb SEGMEMB  segid for membrane
+  -segprot SEGPROT  segid for protein
+  -edp              electro density profile
+  -first FIRST      first frame to read
+  -last LAST        last frame to read
+  -skip SKIP        first frame to read
+  -out OUT          output name
+  -pdb PDB          PDB file
+  
+
+1) Hbond Analysis:
+
+python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb  -out example -hbond
+
+if -pdb flag is mentioned, the b-factor column of the protein will be replace by the occupancies of each residue
+
+2) Hydrophobic contact analysis:
+
+python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb  -out example -hydro
+
+if -pdb flag is mentioned, the b-factor column of the protein will be replace by the avg nb. of hydrophobic contact
+of each residue with the bilayer
+
+3) Cation-pi int. analysis:
+
+python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb  -out example -catpi
+
+if -pdb flag is mentioned, the b-factor column of the protein will be replace by the occupancies of each TYR or TRP
+
+4) Anchoring depth:
+
+python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb  -out example -depth
+if -pdb flag is mentioned, the b-factor column of the protein will be replace by the occupancies of each TYR or TRP
+
+
+5) Prot./Memb. distance:
+
+python PeriProt.py -top mydata.psf -traj mydata.dcd -out example -dist
+
+three possible choice of distance:
+    Which distance ?:
+    1: Prot (COM) - Memb (COM) distance
+    2: Prot (COM) - Phosphate Plane (COM) distance
+    3: Custom distance between two atoms (one in the prot. and one on the memb.)
+
+6) Macrodipole:
+
+python PeriProt.py -top mydata.psf -pdb mydata.pdb  -out example -mdipole
+
 """
 
 __author__ = "Emmanuel Edouard MOUTOUSSAMY"
 __version__  = "1.0.0"
 __date__ = "2020/08"
 __copyright__ = "CC_by_SA"
-__dependencies__ = "Numpy,MDAnalysis and argparse"
+__dependencies__ = "Numpy,MDAnalysis,sys,pandas,matplotlib and argparse"
 
 
 def GetArgs():
     """
     Get all the necessary arguments
-    :return: args: a list:
+    :return: a list with all arguments
     """
 
     parser = argparse.ArgumentParser(description='PeriProt Analysis:')
 
-    parser.add_argument('-top', help= "psf file only")
-    parser.add_argument('-traj', help="trajectories (DCD format)")
+    parser.add_argument('-top', default='None', help= "psf file only") #toplogy file (PSF)
+    parser.add_argument('-traj', help="trajectories (DCD format)") #Trajectory file (DCD)
     parser.add_argument('-hydro',action='store_true', help="Hydrophobic contact analysis")
-    parser.add_argument('-hbond', action='store_true', help="hbond analysis")
-    parser.add_argument('-hbcand', type=str, default='None', help="hbond candidates")
+    parser.add_argument('-hbond',action='store_true', help="hbond analysis")
+    parser.add_argument('-cand',type=str, default='None', help="hbond candidates")
     parser.add_argument('-catpi', action='store_true', help="cation pi analysis")
-    parser.add_argument('-depth', action='store_true', help="depth of anchoring analysis")
+    parser.add_argument('-depth',action='store_true', help="depth of anchoring analysis")
     parser.add_argument('-dist', action='store_true', help="Prot. - Memb distance")
     parser.add_argument('-segmemb', type=str, default='MEMB', help="segid for membrane")
     parser.add_argument('-segprot', type=str, default='PROA', help="segid for protein")
-    parser.add_argument('-edp', action='store_true', help="electro density profile")
     parser.add_argument('-first', type=int, default=0, help="first frame to read")
     parser.add_argument('-last', type=int, default=10000000, help="last frame to read")
     parser.add_argument('-skip', type=int, default=1, help="first frame to read")
     parser.add_argument('-out', type=str, default="periprot", help="output name")
     parser.add_argument('-pdb', type=str, default="None", help="PDB file")
-    parser.add_argument('-mdipole', action='store_true', help="Macrodipole calculation")
+    parser.add_argument('-mdipole',action='store_true', help="Macrodipole calculation")
 
     args = parser.parse_args()
 
@@ -67,22 +128,28 @@ def GetArgs():
 
 
 def done():
+    """
+    Print "...done" when the job is done
+    :return: none
+    """
     print("...done")
 
 
 if __name__ == '__main__':
 
     arguments = GetArgs()
-    print(arguments)
 
+    BodyGuard.PriminilaryCheck(arguments) #check if input are correct
     BodyGuard.checkSegID(arguments.top, arguments.segprot, arguments.segmemb) #Did you gice the right segids ?
+
     psf_info = common.topology(arguments.top, arguments.segmemb, arguments.segprot)
 
 
+    ### RESIDUES AT THE PROT/MEMB INTERFACE
     if arguments.hydro or arguments.hbond or arguments.catpi :
         print("Look for lipids close to the protein...")
-        #close_lipids, close_amino_acids = common.GetClosePartner(arguments.top,arguments.traj, arguments.segprot, arguments.segmemb, psf_info)
-
+        #close_lipids, close_amino_acids = common.GetClosePartner(arguments.top,arguments.traj, arguments.segprot,\
+                                                                 #arguments.segmemb, psf_info)
         close_lipids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 28, 29,\
                         31, 33, 40, 41, 103, 104, 113, 118, 120, 121, 132, 137, 36, 38, 39, 109, 130, 133, 24, 106,\
                         112, 134, 142, 50, 131, 135, 26, 235, 98, 94, 140, 155, 244, 115, 146, 42, 93, 25, 32, 250,\
@@ -94,10 +161,10 @@ if __name__ == '__main__':
                              207, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251,\
                              252, 275, 277, 279, 280, 35, 36, 97, 126, 182, 234, 274, 281, 34, 57, 67, 163, 198, 209,\
                              232, 58, 72, 254, 276, 278, 178, 179, 255, 258, 177, 208]
+
         done()
 
 
-    BodyGuard.PriminilaryCheck(arguments)
 
     ### HBOND ANALYSIS
     if arguments.hbond:
@@ -108,9 +175,9 @@ if __name__ == '__main__':
     ### HYDROPHOBIC CONTACT ANALYSIS
     if arguments.hydro:
         print("Hydrophobic contact calculations...")
-        #prot_candidates, memb_candidates = hydro.HydroCandidateSelection(psf_info)
         hydro.RunHydroAnalysis(arguments.top,arguments.traj,psf_info,close_lipids,close_amino_acids,arguments.out,\
-                               arguments.segprot,arguments.segmemb,arguments.pdb)
+                               arguments.segprot,arguments.segmemb,arguments.pdb,arguments.first,arguments.last,\
+                               arguments.skip)
         done()
 
 
@@ -121,7 +188,7 @@ if __name__ == '__main__':
         print("Cation-Pi interaction calculation...")
 
         catpi.RunAromatic(arguments.top,arguments.traj,psf_info,arguments.segmemb,close_lipids, close_amino_acids,\
-                          arguments.out,arguments.pdb,arguments.segprot)
+                          arguments.out,arguments.pdb,arguments.segprot,arguments.first,arguments.last,arguments.skip)
         done()
 
     ### DEPTH
@@ -140,5 +207,9 @@ if __name__ == '__main__':
         done()
 
 
+    ### MACRODIPOLE
     if arguments.mdipole:
+        print("Macrodipole calculation...")
         Macrodipole.RunMacrodipoleCalculation(arguments.pdb,psf_info.protCharge,arguments.out,arguments.segprot)
+        done()
+

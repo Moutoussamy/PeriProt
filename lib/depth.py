@@ -188,6 +188,7 @@ def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,segidPROT,first_frame,la
     for ts in univers.trajectory:
         if ts.frame == frame_to_read and frame_to_read < last_frame :
             frames.append(ts.frame)
+
             if flag == 0:
                 good_phos_ids = WhereIsTheProtein(univers,segidMEMB,psf)
                 phos_plane = univers.select_atoms("segid %s and (resid %s) and (name P)"%(segidMEMB," ".join(good_phos_ids)))

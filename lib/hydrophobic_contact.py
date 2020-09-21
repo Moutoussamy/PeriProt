@@ -5,7 +5,7 @@ import  MDAnalysis as mda
 from MDAnalysis.analysis import contacts
 
 """
-SET OF FUNCTION TO EVALUATE HYDROPHOBIC CONTACT
+SET OF FUNCTION TO EVALUATE HYDROPHOBIC CONTACTS 
 """
 
 
@@ -124,7 +124,8 @@ def GetCandidate(psf_info,close_lipid,close_prot,atomid_cand_prot,atomid_cand_me
 
 
 
-def RunHydroAnalysis(psf, dcd, psf_info, close_lipid,close_prot,outname,segprot,segmemb,pdb):
+def RunHydroAnalysis(psf, dcd, psf_info, close_lipid,close_prot,outname,segprot,segmemb,pdb\
+                     ,first_frame,last_frame,skip):
     """
     Run calculation of hydrophobic contact using MDanalysis
     :param segidMEMB: segid of the membrane
@@ -155,35 +156,40 @@ def RunHydroAnalysis(psf, dcd, psf_info, close_lipid,close_prot,outname,segprot,
     output_raw = open("%s_hydrophobic_contact_raw_data.csv"%outname,"w")
     output_raw .write("#Frame,ProtResidue,MembRes\n")
 
+    frame_to_read = first_frame
+
     for ts in  univers.trajectory:
-        nbFrame += 1
-        sel_memb = "index %s" % (" ".join(memb_candidates))
-        memb = univers.select_atoms(sel_memb)
-        sel_prot = "index %s" % (" ".join(prot_candidates))
-        prot = univers.select_atoms(sel_prot)
-        dist_mat = mda.analysis.distances.distance_array(prot.positions, memb.positions)
+        if ts.frame == frame_to_read and frame_to_read < last_frame:
+            nbFrame += 1
+            sel_memb = "index %s" % (" ".join(memb_candidates))
+            memb = univers.select_atoms(sel_memb)
+            sel_prot = "index %s" % (" ".join(prot_candidates))
+            prot = univers.select_atoms(sel_prot)
+            dist_mat = mda.analysis.distances.distance_array(prot.positions, memb.positions)
 
-        conctacts =[]
+            conctacts =[]
 
-        #Contact will be fill with list of 2 elements: [atomid in prot,atomid in memb]
-        for i in range(dist_mat.shape[0]):
-            for j in range(dist_mat.shape[1]):
-                if dist_mat[i,j] < 3:
-                    conctacts.append([prot_candidates[i],memb_candidates[j]])
+            #Contact will be fill with list of 2 elements: [atomid in prot,atomid in memb]
+            for i in range(dist_mat.shape[0]):
+                for j in range(dist_mat.shape[1]):
+                    if dist_mat[i,j] < 3:
+                        conctacts.append([prot_candidates[i],memb_candidates[j]])
 
 
-        #parse contact and write the raw data
-        for i in range(len(conctacts)):
-            residues_prot = common.obtainResInfo(int(conctacts[i][0]), psf_info.NbAtomPerProtRes)
-            residues_lipids =  common.obtainResInfo(int(conctacts[i][1]), psf_info.NbAtomPerLipRes)
+            #parse contact and write the raw data
+            for i in range(len(conctacts)):
+                residues_prot = common.obtainResInfo(int(conctacts[i][0]), psf_info.NbAtomPerProtRes)
+                residues_lipids =  common.obtainResInfo(int(conctacts[i][1]), psf_info.NbAtomPerLipRes)
 
-            if residues_prot not in counting:
-                counting[residues_prot] = 1
+                if residues_prot not in counting:
+                    counting[residues_prot] = 1
 
-            else:
-                counting[residues_prot] += 1
+                else:
+                    counting[residues_prot] += 1
 
-            output_raw.write("%i,%s,%s\n"%(ts.frame,residues_prot,residues_lipids))
+                output_raw.write("%i,%s,%s\n"%(ts.frame,residues_prot,residues_lipids))
+
+            frame_to_read += skip
 
 
 

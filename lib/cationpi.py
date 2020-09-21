@@ -60,7 +60,8 @@ def ParseAromDist(dist_mat,arom_list,frame,output_raw,lipids_list,counting):
                     output_raw.write("{0},{1},{2}\n".format(frame,arom,lipids_list[i]))
 
 
-def RunAromatic(psf,dcd,psf_info,segmemb,close_lipids,close_amino_acids,outname,pdb,segprot):
+def RunAromatic(psf,dcd,psf_info,segmemb,close_lipids,close_amino_acids,outname,pdb,segprot,first_frame,\
+                last_frame,skip):
     """
     Run Analysis of Cation-Pi interaction
     :param psf: PSF (topology) file
@@ -90,22 +91,25 @@ def RunAromatic(psf,dcd,psf_info,segmemb,close_lipids,close_amino_acids,outname,
 
     nb_frame = 0
 
+    frame_to_read = first_frame
+
     for ts in univers.trajectory:
-        nb_frame += 1
-        all_nitrogen = univers.select_atoms("(name N) and (segid %s) and (resid %s)" %(segmemb," ".join(close_lipids)))
-        tyrs = univers.select_atoms("(resid %s) and (name %s)"%(" ".join(tyrosine_list)," ".join(TYR)))
-        trps = univers.select_atoms("(resid %s) and (name %s)"%(" ".join(tryptophane_list)," ".join(TRP)))
+            nb_frame += 1
+            all_nitrogen = univers.select_atoms("(name N) and (segid %s) and (resid %s)" %(segmemb," ".join(close_lipids)))
+            tyrs = univers.select_atoms("(resid %s) and (name %s)"%(" ".join(tyrosine_list)," ".join(TYR)))
+            trps = univers.select_atoms("(resid %s) and (name %s)"%(" ".join(tryptophane_list)," ".join(TRP)))
 
-        dist_tyrosines = mda.analysis.distances.distance_array(all_nitrogen.positions, tyrs.positions,\
-                                                               box=None, result=None,backend='serial')
+            dist_tyrosines = mda.analysis.distances.distance_array(all_nitrogen.positions, tyrs.positions,\
+                                                                   box=None, result=None,backend='serial')
 
 
-        dist_trp = mda.analysis.distances.distance_array(all_nitrogen.positions, trps.positions, box=None,\
-                                                         result=None,backend='serial')
+            dist_trp = mda.analysis.distances.distance_array(all_nitrogen.positions, trps.positions, box=None,\
+                                                             result=None,backend='serial')
 
-        ParseAromDist(dist_tyrosines,tyrosine_list,ts.frame,output_raw,close_lipids,counting)
-        ParseAromDist(dist_trp,tryptophane_list,ts.frame,output_raw,close_lipids,counting)
+            ParseAromDist(dist_tyrosines,tyrosine_list,ts.frame,output_raw,close_lipids,counting)
+            ParseAromDist(dist_trp,tryptophane_list,ts.frame,output_raw,close_lipids,counting)
 
+            frame_to_read += skip
 
     occupancies = {}
 
