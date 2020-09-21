@@ -7,6 +7,13 @@ import  MDAnalysis as mda
 SET OF COMMON FUNCTION for different analysis
 '''
 
+AMINO_ACIDS = {'CYS': 'C', 'ASP': 'D', 'SER': 'S', 'GLN': 'Q', 'LYS': 'K',
+     'ILE': 'I', 'PRO': 'P', 'THR': 'T', 'PHE': 'F', 'ASN': 'N',
+     'GLY': 'G', 'HIS': 'H', 'LEU': 'L', 'ARG': 'R', 'TRP': 'W',
+     'ALA': 'A', 'VAL':'V', 'GLU': 'E', 'TYR': 'Y', 'MET': 'M'}
+
+DICO_MASS_ELECTRON = {'N':5,'H':1,'C':4,'O':6,'S':6,'P':5}
+
 
 #CLASS FOR TOPOLOGY: PSF FILE
 class topology():
@@ -28,13 +35,11 @@ class topology():
         :param segidPROT: Protein segid
         """
 
-        self.membresid = []  # sequence
+        self.membresid = []
         self.protresid = []
         self.protindex = [0,0]
         self.membindex = [0,0]
         self.protCharge = {}
-        self.MembCharge = {}
-        self.mass = {}
         self.tyrosines = []
         self.tryptophanes = []
         self.NbAtomPerLipRes = {}
@@ -58,10 +63,10 @@ class topology():
         if int(psfline[0])  > self.protindex[1]: #find the last atom number of the protein
             self.protindex[1] = int(psfline[0])
 
-        key = "%s_%s_%s_%s"%(psfline[3],psfline[2],psfline[0],psfline[4])
+        key = "%s_%s"%(psfline[3],psfline[4])
 
         self.protCharge[key] = float(psfline[6]) #Collect the charge
-        self.mass[key] = float(psfline[7]) #Collect the mass
+
 
         if int(psfline[2]) not in self.protresid: #Collect the resid
             self.protresid.append(int(psfline[2]))
@@ -81,6 +86,7 @@ class topology():
             if psfline[2] not in self.tryptophanes:
                 self.tryptophanes.append(psfline[2])
 
+
     def FillMembInfos(self,psfline):
         """
         Fill information regarding the membrane
@@ -98,9 +104,6 @@ class topology():
             self.membindex[1] = int(psfline[0])
 
         key = "%s_%s_%s_%s"%(psfline[3],psfline[2],psfline[0],psfline[4])
-
-        self.MembCharge[key] = float(psfline[6]) #Collect the charge
-        self.mass[key] = float(psfline[7]) #Collect the mass
 
 
         if int(psfline[2]) not in self.membresid: #Collect the resid
@@ -122,12 +125,14 @@ class topology():
         :param segidPROT: protein segid
         :return:
         """
+
         with open(psf) as topology_file:
             for line in topology_file:
                 line = line.split()
                 if len(line) == 9:
                     if line[1] == segidPROT:
                         self.FillProtInfos(line)
+
                     elif line[1] == segidMEMB:
                         self.FillMembInfos(line)
 
@@ -270,9 +275,9 @@ def GetClosePartner(psf,dcd,segprot,segmemb,psf_info):
 
 def convertIntToStr(list_int):
     """
-    Convert a list of 
-    :param list_int:
-    :return:
+    Convert a list of int to a list os str
+    :param list_int: list of int
+    :return: a list of str
     """
     list_str = []
     for i in list_int:
@@ -281,6 +286,12 @@ def convertIntToStr(list_int):
     return list_str
 
 def obtainResInfo(atomid, NbAtomPerRes):
+    """
+    Obetain the resid based on atom id
+    :param atomid: atom id
+    :param NbAtomPerRes:  dico made by topology structure (common)
+    :return:
+    """
 
     for residue in NbAtomPerRes.keys():
         if NbAtomPerRes[residue][0] < atomid < NbAtomPerRes[residue][1]:

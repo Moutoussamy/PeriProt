@@ -2,12 +2,10 @@
 
 import common
 import  MDAnalysis as mda
-from MDAnalysis.analysis import contacts
 
 """
 SET OF FUNCTION TO EVALUATE HYDROPHOBIC CONTACT
 """
-
 
 
 def HydroCandidateSelection(psf_info):
@@ -50,7 +48,9 @@ def HydroCandidateSelection(psf_info):
                 if res_infos_decompose[3] not in memb_hydro_candidates:
                     memb_hydro_candidates.append(res_infos_decompose[3])
 
+
     return prot_hydro_candidates, memb_hydro_candidates
+
 
 
 def GetNearAtom(close_res,NbAtomPerRes):
@@ -195,7 +195,7 @@ def RunHydroAnalysis(psf, dcd, psf_info, close_lipid,close_prot,outname,segprot,
             counting[str(residue)] = 0
 
     if pdb != 'None':
-        common.Mapped(pdb,counting,segprot,outname,"_average_hydrophobic_contact_per_frame")
+        common.Mapped(pdb,counting,segprot,outname,"average_hydrophobic_contact_per_frame")
 
 
     output_avg.close()

@@ -57,8 +57,7 @@ def ParseAromDist(dist_mat,arom_list,frame,output_raw,lipids_list,counting):
                     else:
                         counting[arom] +=1
 
-                    dist_mat_arom = ','.join(map(str, dist_mat_arom))
-                    output_raw.write("{0},{1},{2},{3}\n".format(frame,arom,lipids_list[i],dist_mat_arom))
+                    output_raw.write("{0},{1},{2}\n".format(frame,arom,lipids_list[i]))
 
 
 def RunAromatic(psf,dcd,psf_info,segmemb,close_lipids,close_amino_acids,outname,pdb,segprot):
@@ -79,8 +78,10 @@ def RunAromatic(psf,dcd,psf_info,segmemb,close_lipids,close_amino_acids,outname,
 
     close_lipids = common.convertIntToStr(close_lipids)
 
-    output_raw = open("%s_cation_pi_int.dat"%outname,"w")
-    output_raw.write("#frame,resProt,resMemb,d1,d2,d3,d4,d5,d6\n")
+    output_raw = open("%s_cation_pi_int_raw_data.csv"%outname,"w")
+    output_raw.write("#frame,resProt,resMemb\n")
+    output = open("%s_cation_pi_int.csv"%outname,"w")
+    output.write("#Residue,occupancy\n")
 
     tyrosine_list = IsTheAromClose(close_amino_acids,psf_info.tyrosines)
     tryptophane_list = IsTheAromClose(close_amino_acids,psf_info.tryptophanes)
@@ -95,12 +96,12 @@ def RunAromatic(psf,dcd,psf_info,segmemb,close_lipids,close_amino_acids,outname,
         tyrs = univers.select_atoms("(resid %s) and (name %s)"%(" ".join(tyrosine_list)," ".join(TYR)))
         trps = univers.select_atoms("(resid %s) and (name %s)"%(" ".join(tryptophane_list)," ".join(TRP)))
 
-        dist_tyrosines = mda.analysis.distances.distance_array(all_nitrogen.positions, tyrs.positions, box=None, result=None,
-                                                     backend='serial')
+        dist_tyrosines = mda.analysis.distances.distance_array(all_nitrogen.positions, tyrs.positions,\
+                                                               box=None, result=None,backend='serial')
 
 
-        dist_trp = mda.analysis.distances.distance_array(all_nitrogen.positions, trps.positions, box=None, result=None,
-                                                     backend='serial')
+        dist_trp = mda.analysis.distances.distance_array(all_nitrogen.positions, trps.positions, box=None,\
+                                                         result=None,backend='serial')
 
         ParseAromDist(dist_tyrosines,tyrosine_list,ts.frame,output_raw,close_lipids,counting)
         ParseAromDist(dist_trp,tryptophane_list,ts.frame,output_raw,close_lipids,counting)
@@ -109,11 +110,11 @@ def RunAromatic(psf,dcd,psf_info,segmemb,close_lipids,close_amino_acids,outname,
     occupancies = {}
 
     for amino_acid in counting.keys():
-        occupancies[amino_acid] = (float(counting[amino_acid])/float(nb_frame))*100
+        output.write("{0},{1}\n".format(amino_acid,(float(counting[amino_acid])/float(nb_frame))*100))
 
     for residue in psf_info.protresid:
         if str(residue) not in occupancies.keys():
             occupancies[str(residue)] = 0
 
     if pdb != 'None':
-        common.Mapped(pdb,occupancies,segprot,outname,"cation_pi_occupencies")
+        common.Mapped(pdb,occupancies,segprot,outname,"cation_pi_occupancies")

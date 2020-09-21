@@ -1,0 +1,16 @@
+! phosphatidylcholine
+#name XXPC
+#acceptor O13 O14 O12 O11 021 022 031 032
+#donor
+#phosphate O13 O14 O12 O11
+#glycerol 021 022 031 032
+#head
+! phosphatidylethanolamine
+#name XXPE
+#acceptor O13 O14 O12 O11 021 022 031 032
+#donor N HN1 HN2 HN3
+#phosphate O13 O14 O12 O11
+#glycerol 021 022 031 032
+#head N HN1 HN2 HN3
+
+! phosphatidylglycerol

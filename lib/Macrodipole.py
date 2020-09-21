@@ -106,11 +106,11 @@ def DrawArrow(outname,dpmag_Deb, dp_x, dp_y, dp_z,CenterOfCharge):
 def RunMacrodipoleCalculation(pdb,charge_dico,outname,segidprot):
     """
     Run the macrodipole calculation
-    :param pdb:
-    :param charge_dico:
-    :param outname:
-    :param segidprot:
-    :return:
+    :param pdb: PSD file
+    :param charge_dico: dico of charge for topology structure
+    :param outname: outputname
+    :param segidprot: segid of the protein
+    :return: none
     """
     WritePDB2PQR(charge_dico,pdb,outname,segidprot)
     PqrFile = pd.read_csv("%s_charge_info.pqr"%(outname))
