@@ -182,3 +182,10 @@ The output files:
 
 Example of output:
  ![](images/macrodipole_out_example.png "macrodipole" )
+
+
+# Contact
+
+If you have questions, feel free to contact me:
+mail: e.e.moutoussamy@gmail.com
+
