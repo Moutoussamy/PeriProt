@@ -90,12 +90,7 @@ python PeriProt.py -top mydata.psf -pdb mydata.pdb  -out example -mdipole
 """
 
 __author__ = "Emmanuel Edouard MOUTOUSSAMY"
-__version__  = "1.0.0"
 __date__ = "2020/08"
-__copyright__ = "CC_by_SA"
-__dependencies__ = "Numpy,MDAnalysis,sys,pandas,matplotlib and argparse"
-
-
 
 def GetArgs():
     """
@@ -109,7 +104,6 @@ def GetArgs():
     parser.add_argument('-traj', help="trajectories (DCD format)") #Trajectory file (DCD)
     parser.add_argument('-hydro',action='store_true', help="Hydrophobic contact analysis")
     parser.add_argument('-hbond',action='store_true', help="hbond analysis")
-    parser.add_argument('-cand',type=str, default='None', help="hbond candidates")
     parser.add_argument('-catpi', action='store_true', help="cation pi analysis")
     parser.add_argument('-depth',action='store_true', help="depth of anchoring analysis")
     parser.add_argument('-dist', action='store_true', help="Prot. - Memb distance")

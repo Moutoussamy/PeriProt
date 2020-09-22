@@ -7,11 +7,19 @@ import common
 import MDAnalysis as mda
 import matplotlib.pyplot as plt
 
+
+
 """
 SET OF FUNCTION TO EVALUATE THE DEPTH OF ANCHORING
 the depth of anchoring correponds to the z-distance
 between the CA atom anf the average phosphate plane
 """
+
+
+__author__ = "Emmanuel Edouard MOUTOUSSAMY"
+__date__ = "2020/08"
+
+
 
 def initializeDico(dico_resid,residues_list):
     """

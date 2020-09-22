@@ -9,6 +9,11 @@ SET OF FUNCTION TO EVALUATE HYDROPHOBIC CONTACTS
 """
 
 
+__author__ = "Emmanuel Edouard MOUTOUSSAMY"
+__date__ = "2020/08"
+
+
+
 def readCandidates(Memb_res):
     """
     Read the atom list in the file: lib/hydrophobic_candidates_prot.dat

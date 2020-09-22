@@ -10,6 +10,11 @@ SET OF FUNCTION TO CALCULATE THE PROT-MEMB DISTANCE
 """
 
 
+__author__ = "Emmanuel Edouard MOUTOUSSAMY"
+__date__ = "2020/08"
+
+
+
 def WhichDist():
     """
     Which type of distance do you want

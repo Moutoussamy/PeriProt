@@ -7,11 +7,7 @@ BodyGuard will check input to kick you out if you do something wrong.
 """
 
 __author__ = "Emmanuel Edouard MOUTOUSSAMY"
-__version__  = "1.0.0"
 __date__ = "2020/08"
-__copyright__ = "CC_by_SA"
-__dependencies__ = "Numpy,MDAnalysis and argparse"
-
 
 
 

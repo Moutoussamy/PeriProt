@@ -7,6 +7,12 @@ import MDAnalysis as mda
 SET OF FUNCTION TO CALCULATE THE CATION-PI INTERACTION
 """
 
+
+__author__ = "Emmanuel Edouard MOUTOUSSAMY"
+__date__ = "2020/08"
+
+
+
 TYR = ["CG", "CZ", "CD1", "CD2", "CE2", "CE1"]
 TRP = ["CE3", "CD2", "CE2", "CZ2", "CH2", "CZ3"]
 

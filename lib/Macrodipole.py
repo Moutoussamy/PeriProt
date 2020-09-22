@@ -12,6 +12,11 @@ __date__ = "2019/10"
 import numpy as np
 import pandas as pd
 
+
+__author__ = "Emmanuel Edouard MOUTOUSSAMY"
+__date__ = "2020/08"
+
+
 def WritePDB2PQR(DicoCharge,pdb,outname,segidprot):
     """
     Write a kind of PQRFILE

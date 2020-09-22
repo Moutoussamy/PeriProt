@@ -7,6 +7,10 @@ READ TOPOLOGY FROM CHARMM AND MAKE A LIST OF POTENTIAL ATOM CANDIDATES FOR HYDRO
 '''
 
 
+__author__ = "Emmanuel Edouard MOUTOUSSAMY"
+__date__ = "2020/08"
+
+
 
 def ReadTopparCharmm(toppar):
     """

@@ -7,6 +7,12 @@ import  MDAnalysis as mda
 SET OF COMMON FUNCTIONS FOR THE DIFFERENT ANALYSIS
 '''
 
+
+__author__ = "Emmanuel Edouard MOUTOUSSAMY"
+__date__ = "2020/08"
+
+
+
 AMINO_ACIDS = {'CYS': 'C', 'ASP': 'D', 'SER': 'S', 'GLN': 'Q', 'LYS': 'K',
      'ILE': 'I', 'PRO': 'P', 'THR': 'T', 'PHE': 'F', 'ASN': 'N',
      'GLY': 'G', 'HIS': 'H', 'LEU': 'L', 'ARG': 'R', 'TRP': 'W',
