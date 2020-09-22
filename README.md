@@ -16,9 +16,8 @@ The available analysis are:
 # Dependencies
 
 Following packages are required: 
-  - sys
   - argparse (version >= 1.1)
-  - MDAnalysis (version >= 0.20.1)
+  - MDAnalysis (version == 0.20.1)
   - Matplotlib (version >= 3.1.0)
   - Numpy (version >= 1.19.1)
   - Pandas (version >= 0.24.2)
