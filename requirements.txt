@@ -1,0 +1,8 @@
+#To use it: "sudo pip install -r requirements.txt"
+###### Requirements without Version Specifiers ######
+argparse
+matplotlib
+numpy
+pandas
+MDAnalysis ==  0.20.1
+

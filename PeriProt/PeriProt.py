@@ -4,7 +4,7 @@ import sys
 import argparse
 import numpy as np
 import  MDAnalysis as mda
-sys.path.insert(0, './lib/')
+sys.path.insert(0, '../lib/')
 import hbond as hb
 import common
 import hydrophobic_contact as hydro
@@ -96,6 +96,7 @@ __copyright__ = "CC_by_SA"
 __dependencies__ = "Numpy,MDAnalysis,sys,pandas,matplotlib and argparse"
 
 
+
 def GetArgs():
     """
     Get all the necessary arguments
@@ -138,11 +139,14 @@ def done():
 if __name__ == '__main__':
 
     arguments = GetArgs()
+    logfile = open("%s.log"%arguments.out,"w")
+    logfile.write("%s\n"%(" ".join(sys.argv)))
 
     BodyGuard.PriminilaryCheck(arguments) #check if input are correct
     BodyGuard.checkSegID(arguments.top, arguments.segprot, arguments.segmemb) #Did you gice the right segids ?
 
     psf_info = common.topology(arguments.top, arguments.segmemb, arguments.segprot)
+
 
 
     ### RESIDUES AT THE PROT/MEMB INTERFACE

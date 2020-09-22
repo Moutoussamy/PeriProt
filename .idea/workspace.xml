@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ce6c654-e7ea-4cf0-b8ca-3ea4ee7c780f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PeriProt.py" beforeDir="false" afterPath="$PROJECT_DIR$/PeriProt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PeriProt.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,52 +28,37 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="18" />
+          <entry key="py" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="18" />
+          <entry key="Python" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="2" />
-          <entry key="py" value="37537" />
+          <entry key="py" value="37827" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="37537" />
+          <entry key="Python" value="37827" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/PeriProt.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="150" column="8" selection-start-line="150" selection-start-column="8" selection-end-line="150" selection-end-column="8" />
-              <folding>
-                <element signature="e#24#34#0" expanded="true" />
-                <marker date="1600724618013" expanded="true" signature="5009:5033" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/hydrophobic_contact.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2440">
-              <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="18" />
+            <state relative-caret-position="105">
+              <caret line="7" column="32" lean-forward="true" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
               <folding>
-                <marker date="1600719188039" expanded="true" signature="1442:2124" ph="..." />
-                <marker date="1600719188039" expanded="true" signature="2125:2127" ph="..." />
-                <marker date="1600719188039" expanded="true" signature="3000:3124" ph="..." />
+                <element signature="e#24#37#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,7 +79,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/depth.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
+            <state relative-caret-position="3105">
               <caret line="207" column="12" selection-start-line="207" selection-start-column="12" selection-end-line="207" selection-end-column="33" />
               <folding>
                 <element signature="e#25#43#0" expanded="true" />
@@ -114,7 +100,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/Macrodipole.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-987">
+            <state relative-caret-position="15">
               <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="54" />
               <folding>
                 <element signature="e#220#238#0" expanded="true" />
@@ -127,7 +113,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/common.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3835">
+            <state relative-caret-position="753">
               <caret line="273" selection-start-line="273" selection-end-line="273" />
               <folding>
                 <element signature="e#24#42#0" expanded="true" />
@@ -141,7 +127,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ProtMembDist.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2247">
+            <state relative-caret-position="15">
               <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="20" />
               <folding>
                 <element signature="e#24#37#0" expanded="true" />
@@ -151,10 +137,28 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/setup.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/PeriProt/PeriProt.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="142" column="23" selection-start-line="142" selection-start-column="23" selection-end-line="142" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/hbond.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1902">
-              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" selection-end-column="24" />
+            <state relative-caret-position="15">
+              <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="24" />
               <folding>
                 <marker date="1600723086977" expanded="true" signature="1400:1401" ph="..." />
                 <marker date="1600723086977" expanded="true" signature="1690:1695" ph="..." />
@@ -198,6 +202,8 @@
         <option value="$PROJECT_DIR$/lib/cationpi.py" />
         <option value="$PROJECT_DIR$/lib/hbond.py" />
         <option value="$PROJECT_DIR$/PeriProt.py" />
+        <option value="$PROJECT_DIR$/setup.py" />
+        <option value="$PROJECT_DIR$/PeriProt/PeriProt.py" />
       </list>
     </option>
   </component>
@@ -221,7 +227,7 @@
             <path>
               <item name="PeriProt" type="b2602c69:ProjectViewProjectNode" />
               <item name="PeriProt" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="PeriProt" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -266,7 +272,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.25679544" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -324,14 +330,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/hydrophobic_contact.py">
+    <entry file="file://$PROJECT_DIR$/PeriProt.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2440">
-          <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="18" />
+        <state relative-caret-position="480">
+          <caret line="32" column="33" lean-forward="true" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
           <folding>
-            <marker date="1600719188039" expanded="true" signature="1442:2124" ph="..." />
-            <marker date="1600719188039" expanded="true" signature="2125:2127" ph="..." />
-            <marker date="1600719188039" expanded="true" signature="3000:3124" ph="..." />
+            <element signature="e#24#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -346,12 +350,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/depth.py">
+    <entry file="file://$PROJECT_DIR$/lib/ProtMembDist.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="207" column="12" selection-start-line="207" selection-start-column="12" selection-end-line="207" selection-end-column="33" />
+        <state relative-caret-position="15">
+          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="20" />
           <folding>
-            <element signature="e#25#43#0" expanded="true" />
+            <element signature="e#24#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="753">
+          <caret line="273" selection-start-line="273" selection-end-line="273" />
+          <folding>
+            <element signature="e#24#42#0" expanded="true" />
+            <marker date="1600723053423" expanded="true" signature="912:913" ph="..." />
+            <marker date="1600723053423" expanded="true" signature="3828:3837" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/Macrodipole.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="54" />
+          <folding>
+            <element signature="e#220#238#0" expanded="true" />
+            <marker date="1600719188019" expanded="true" signature="3833:3890" ph="..." />
           </folding>
         </state>
       </provider>
@@ -363,43 +390,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/Macrodipole.py">
+    <entry file="file://$PROJECT_DIR$/lib/depth.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-987">
-          <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="54" />
+        <state relative-caret-position="3105">
+          <caret line="207" column="12" selection-start-line="207" selection-start-column="12" selection-end-line="207" selection-end-column="33" />
           <folding>
-            <element signature="e#220#238#0" expanded="true" />
-            <marker date="1600719188019" expanded="true" signature="3833:3890" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3835">
-          <caret line="273" selection-start-line="273" selection-end-line="273" />
-          <folding>
-            <element signature="e#24#42#0" expanded="true" />
-            <marker date="1600723053423" expanded="true" signature="912:913" ph="..." />
-            <marker date="1600723053423" expanded="true" signature="3828:3837" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ProtMembDist.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2247">
-          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="20" />
-          <folding>
-            <element signature="e#24#37#0" expanded="true" />
+            <element signature="e#25#43#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/hbond.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1902">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" selection-end-column="24" />
+        <state relative-caret-position="15">
+          <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="24" />
           <folding>
             <marker date="1600723086977" expanded="true" signature="1400:1401" ph="..." />
             <marker date="1600723086977" expanded="true" signature="1690:1695" ph="..." />
@@ -407,14 +411,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PeriProt.py">
+    <entry file="file://$PROJECT_DIR$/lib/hydrophobic_contact.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="150" column="8" selection-start-line="150" selection-start-column="8" selection-end-line="150" selection-end-column="8" />
+        <state relative-caret-position="105">
+          <caret line="7" column="32" lean-forward="true" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
           <folding>
-            <element signature="e#24#34#0" expanded="true" />
-            <marker date="1600724618013" expanded="true" signature="5009:5033" ph="..." />
+            <element signature="e#24#37#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PeriProt/PeriProt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="142" column="23" selection-start-line="142" selection-start-column="23" selection-end-line="142" selection-end-column="23" />
         </state>
       </provider>
     </entry>
