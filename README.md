@@ -2,7 +2,7 @@
 ![](images/logo_periprot.png "logo" )
 # PeriProt
 
-Periprot 1.0 is a sofware built to analysis Peripheral Membrane Proteins (PMPs) structure or Molecular Dynamics (MD) simulation data. Periprot can only analyse data from NAMD or CHARMM simulation (PSF format for the topology and dcd format for the trajectory). 
+Periprot 1.0 is a sofware built to analyse Peripheral Membrane Proteins (PMPs) structure or Molecular Dynamics (MD) simulation data. Periprot can only analyse data from NAMD or CHARMM simulation (PSF format for the topology and dcd format for the trajectory). 
 
 The available analysis are:
 
