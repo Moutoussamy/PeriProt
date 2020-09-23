@@ -45,7 +45,7 @@ Following packages are required:
 ```
 
 - top (string):
-topology file (PSF) file. this file is required for all analysis.
+topology file (PSF) file. This file is required for all analysis.
 
 - traj (string):
 trajectory file, only DCD file is accepted.
@@ -72,7 +72,7 @@ First frame to take into account. Default = 0
 Last frame to take into account. 
 
 - skip (integer):
-Skip frame ? Default = 1
+Skip frames? Default = 1
 
 - out (string):
 output name for results. Default = periprot
@@ -86,7 +86,7 @@ If this flag is present the macrodipole of the protein will be calculated.
 
  # (1) Depth of anchoring
  
- Periprot can be use to calculate the average depth of anchoring (DOA) of each residue in the bilayer. The DOA here represent the distance from the carbon alpha (CA) of the residue and the average phosphate plane. I the CA is below the phosphate plane the DOA will be negative.
+ Periprot can be use to calculate the average depth of anchoring (DOA) of each residue in the bilayer. The DOA here represent the distance from the carbon alpha (CA) of the residue and the average phosphate plane. If the CA is below the phosphate plane the DOA will be negative.
 
 usage: python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb -depth -out example
 
