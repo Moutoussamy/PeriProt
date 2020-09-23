@@ -16,7 +16,7 @@ __date__ = "2020/08"
 
 
 
-def CollectHbondCandInfo():
+def CollectHbondCandInfo(libpath):
     """
     Collect hbond donors and acceptors from lib/hbond_acceptor_donnor_list_lipids.dat
     :return: donors,acceptors,head,glycerol,phos lists
@@ -28,7 +28,7 @@ def CollectHbondCandInfo():
     glycerol = [] # store glycerol atoms
     phos = [] #store phosphate atoms
 
-    with open("lib/hbond_acceptor_donnor_list_lipids.dat") as input_file:
+    with open("%s/hbond_acceptor_donnor_list_lipids.dat"%libpath) as input_file:
         for line in input_file:
 
             if "#acceptor" in line : #Acceptor list
@@ -53,7 +53,7 @@ def CollectHbondCandInfo():
     return donors,acceptors,head,glycerol,phos
 
 
-def GetTimeSeries(psf,dcd,outname):
+def GetTimeSeries(psf,dcd,outname,libpath):
     """
     Get time series from the MDanalysis
     :param psf: PSF file
@@ -62,7 +62,7 @@ def GetTimeSeries(psf,dcd,outname):
     :return: times series results
     """
 
-    donor, acceptor, head, glycerol, phos = CollectHbondCandInfo()
+    donor, acceptor, head, glycerol, phos = CollectHbondCandInfo(libpath)
 
     universe = mda.Universe(psf,dcd)
     hbonds = mda.analysis.hbonds.HydrogenBondAnalysis(universe,"segid MEMB","segid PROA",donors= donor, acceptors = acceptor )
@@ -150,7 +150,7 @@ def write_results(occupancies,outname):
 
     output.close()
 
-def runHbond(psf,dcd,outname,resid_list,segprot,pdb):
+def runHbond(psf,dcd,outname,resid_list,segprot,pdb,libpath):
     """
     Run Hbond calculation
     :param psf: PSF file
@@ -161,7 +161,7 @@ def runHbond(psf,dcd,outname,resid_list,segprot,pdb):
     :param pdb: PDB file
     :return:
     """
-    hbonds_data = GetTimeSeries(psf, dcd, outname)
+    hbonds_data = GetTimeSeries(psf, dcd, outname,libpath)
     times = Gettime(hbonds_data)
     times_series_data = ReadRwData(outname,times)
     occupancies = Occupancies(times_series_data,len(times.keys()))

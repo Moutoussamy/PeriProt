@@ -2,9 +2,10 @@
 
 import sys
 import argparse
-import numpy as np
-import  MDAnalysis as mda
-sys.path.insert(0, '../lib/')
+import os
+
+LIBPATH = '%s/../lib/'%(os.path.dirname(sys.argv[0])) #Path of Periprot library
+sys.path.insert(0,LIBPATH)
 import hbond as hb
 import common
 import hydrophobic_contact as hydro
@@ -129,12 +130,16 @@ def done():
     """
     print("...done")
 
+def write_close_partner(close_lipids, close_amino_acids,logfile):
+    logfile.write("lipids close to the protein: %s\n" % (" ".join(str(close_lipids))))
+    logfile.write("residues close to the bilayer: %s\n" % (" ".join(str(close_amino_acids))))
+
 
 if __name__ == '__main__':
 
     arguments = GetArgs()
     logfile = open("%s.log"%arguments.out,"w")
-    logfile.write("%s\n"%(" ".join(sys.argv)))
+    logfile.write("command line: %s\n"%(" ".join(sys.argv)))
 
     BodyGuard.PriminilaryCheck(arguments) #check if input are correct
     BodyGuard.checkSegID(arguments.top, arguments.segprot, arguments.segmemb) #Did you gice the right segids ?
@@ -148,6 +153,8 @@ if __name__ == '__main__':
         print("Look for lipids close to the protein...")
         close_lipids, close_amino_acids = common.GetClosePartner(arguments.top,arguments.traj, arguments.segprot,\
                                                                  arguments.segmemb, psf_info)
+
+        write_close_partner(close_lipids, close_amino_acids,logfile)
         done()
 
 
@@ -155,7 +162,8 @@ if __name__ == '__main__':
     ### HBOND ANALYSIS
     if arguments.hbond:
         print("Hbond network analysis...")
-        hb.runHbond(arguments.top,arguments.traj,arguments.out,psf_info.protresid,arguments.segprot,arguments.pdb)
+        hb.runHbond(arguments.top,arguments.traj,arguments.out,psf_info.protresid,arguments.segprot,\
+                    arguments.pdb,LIBPATH)
         done()
 
     ### HYDROPHOBIC CONTACT ANALYSIS
@@ -163,7 +171,7 @@ if __name__ == '__main__':
         print("Hydrophobic contact calculations...")
         hydro.RunHydroAnalysis(arguments.top,arguments.traj,psf_info,close_lipids,close_amino_acids,arguments.out,\
                                arguments.segprot,arguments.segmemb,arguments.pdb,arguments.first,arguments.last,\
-                               arguments.skip)
+                               arguments.skip,LIBPATH)
         done()
 
 
@@ -199,3 +207,5 @@ if __name__ == '__main__':
         Macrodipole.RunMacrodipoleCalculation(arguments.pdb,psf_info.protCharge,arguments.out,arguments.segprot)
         done()
 
+
+    logfile.close()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import common
-import  MDAnalysis as mda
+import MDAnalysis as mda
 from MDAnalysis.analysis import contacts
 
 """
@@ -14,7 +14,7 @@ __date__ = "2020/08"
 
 
 
-def readCandidates(Memb_res):
+def readCandidates(Memb_res,libpath):
     """
     Read the atom list in the file: lib/hydrophobic_candidates_prot.dat
     :param Memb_res: list of lipids in the system
@@ -25,14 +25,14 @@ def readCandidates(Memb_res):
     prot_cand_atom = {}
     memb_cand_atom = {}
 
-    with open("lib/hydrophobic_candidates_prot.dat") as inputfile:
+    with open("%s/hydrophobic_candidates_prot.dat"%libpath) as inputfile:
         for line in inputfile:
             line = line.split()
             if len(line) == 2:
                 prot_cand_atom[line[0]] = line[1].split(",")
 
 
-    with open("lib/hydrophobic_candidates_lipid.dat") as inputfile:
+    with open("%s/hydrophobic_candidates_lipid.dat"%libpath) as inputfile:
         for line in inputfile:
             line = line.split()
             if line[0] in Memb_res:
@@ -130,7 +130,7 @@ def GetCandidate(psf_info,close_lipid,close_prot,atomid_cand_prot,atomid_cand_me
 
 
 def RunHydroAnalysis(psf, dcd, psf_info, close_lipid,close_prot,outname,segprot,segmemb,pdb\
-                     ,first_frame,last_frame,skip):
+                     ,first_frame,last_frame,skip,libpath):
     """
     Run calculation of hydrophobic contact using MDanalysis
     :param segidMEMB: segid of the membrane
@@ -142,7 +142,7 @@ def RunHydroAnalysis(psf, dcd, psf_info, close_lipid,close_prot,outname,segprot,
     :return:
     """
 
-    prot_cand_atom, memb_cand_atom = readCandidates(psf_info.lipids)
+    prot_cand_atom, memb_cand_atom = readCandidates(psf_info.lipids,libpath)
     atomid_cand_prot, atomid_cand_memb = HydroCandidateSelection(psf,segprot, segmemb, prot_cand_atom, memb_cand_atom)
     prot_candidates, memb_candidates = GetCandidate(psf_info,close_lipid,close_prot,atomid_cand_prot, atomid_cand_memb)
     prot_candidates = common.convertIntToStr(prot_candidates)
