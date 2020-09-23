@@ -176,7 +176,7 @@ def MapOnPDB(pdb,residues_list,segidPROT,depth_avg,outname):
     for i in range(len(residues_list)):
         depth_dico[residues_list[i]] = depth_avg[i]
 
-    common.Mapped(pdb,depth_dico,segidPROT,outname,"_depth_of_anchoring")
+    common.Mapped(pdb,depth_dico,segidPROT,outname,"depth_of_anchoring")
 
 def RunDepthOfAnchoring(psf,dcd,residues_list,segidMEMB,segidPROT,first_frame,last_frame,skip,outname,pdb):
     """
