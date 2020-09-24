@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import common
 import MDAnalysis as mda
 from scipy.spatial import distance
@@ -30,10 +31,13 @@ def WhichDist():
     Selection:
     """)
 
-    if whichdist not in [1,2,3]: #recrusion, to get the right value
+    if whichdist.isalpha():
+        sys.exit("Entry not reconize: please give a number between 1 and 3.")
+        
+    elif int(whichdist) not in [1,2,3]: #recrusion, to get the right value
         WhichDist()
 
-    return whichdist
+    return int(whichdist)
 
 def SelProt(prot_sel_criteria):
     """
