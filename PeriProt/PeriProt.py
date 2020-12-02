@@ -35,7 +35,6 @@ Usage:
   -traj TRAJ        trajectories (DCD format)
   -hydro            Hydrophobic contact analysis
   -hbond            hbond analysis
-  -hbcand HBCAND    hbond candidates
   -catpi            cation pi analysis
   -depth            depth of anchoring analysis
   -dist             Prot. - Memb distance
