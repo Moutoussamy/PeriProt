@@ -100,7 +100,7 @@ Example of output:
 
  # (2) Hydrophobic contact analysis
  
-In Periprot, an hydrophobic contact are consider between to candidates atom (one from the protein and one from the bilayer) if there distance are less than 3 Å. The candidates atom can be picked automatiocally or the user can give his own candidates list.
+In Periprot, an hydrophobic contact are consider between to candidates atom (one from the protein and one from the bilayer) if there distance are less than 3 Å. The candidates atom can be picked automatically. The user can modified the list of candidiates in the folowing files: lib/hydrophobic_candidates_lipid.dat & hydrophobic_candidates_prot.dat
 
 usage: python PeriProt.py -top mydata.psf -traj mydata.dcd -pdb mydata.pdb -hydro -out example
 
