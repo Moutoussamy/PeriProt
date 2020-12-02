@@ -8,6 +8,7 @@ from MDAnalysis.analysis import hbonds
 
 """
 SET OF FUNCTION TO EVALUATE HYDROPHOBIC CONTACT
+see Grauffel et al., 2013 for definition
 """
 
 

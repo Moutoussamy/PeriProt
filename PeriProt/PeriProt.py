@@ -152,7 +152,8 @@ if __name__ == '__main__':
     if arguments.hydro or arguments.hbond or arguments.catpi :
         print("Look for lipids close to the protein...")
         close_lipids, close_amino_acids = common.GetClosePartner(arguments.top,arguments.traj, arguments.segprot,\
-                                                                 arguments.segmemb, psf_info)
+                                                                 arguments.segmemb, psf_info,arguments.first,\
+                                                                 arguments.last,arguments.skip)
 
         write_close_partner(close_lipids, close_amino_acids,logfile)
         done()

@@ -5,7 +5,8 @@ import MDAnalysis as mda
 from MDAnalysis.analysis import contacts
 
 """
-SET OF FUNCTION TO EVALUATE HYDROPHOBIC CONTACTS 
+SET OF FUNCTIONS TO EVALUATE HYDROPHOBIC CONTACTS 
+For hydrophobic contact definition see Grauffel et al., 2013
 """
 
 

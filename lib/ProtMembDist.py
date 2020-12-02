@@ -33,7 +33,7 @@ def WhichDist():
 
     if whichdist.isalpha():
         sys.exit("Entry not reconize: please give a number between 1 and 3.")
-        
+
     elif int(whichdist) not in [1,2,3]: #recrusion, to get the right value
         WhichDist()
 
@@ -134,10 +134,10 @@ def plot_results_dist(frames,dist,outname):
     """
     fig, ax = plt.subplots(figsize=(10,8 ))
 
-    plt.rcParams["xtick.labelsize"] = 20
-    plt.rcParams["ytick.labelsize"] = 20
-    plt.rcParams["axes.labelsize"] = 24
-    plt.rcParams["axes.labelsize"] = 24
+    plt.rcParams["xtick.labelsize"] = 24
+    plt.rcParams["ytick.labelsize"] = 24
+    plt.rcParams["axes.labelsize"] = 28
+    plt.rcParams["axes.labelsize"] = 28
 
     plt.plot(frames,dist,color = "black",linewidth = 1)
     plt.xlabel("Frame")

@@ -5,6 +5,7 @@ import MDAnalysis as mda
 
 """
 SET OF FUNCTION TO CALCULATE THE CATION-PI INTERACTION
+see Grauffel et al., 2013 for definition
 """
 
 

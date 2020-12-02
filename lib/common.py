@@ -256,8 +256,7 @@ def ParseDistanceMatrix(dist_mat,psf_info,closed_lipids,close_amino_acids):
 
     return closed_lipids,close_amino_acids
 
-
-def GetClosePartner(psf,dcd,segprot,segmemb,psf_info):
+def GetClosePartner(psf,dcd,segprot,segmemb,psf_info,first_frame,last_frame,skip):
     """
     Get the lipid close to the prot and the aminoacid close to the bilayer during the simulation
     :param psf: PSF file
@@ -271,12 +270,15 @@ def GetClosePartner(psf,dcd,segprot,segmemb,psf_info):
 
     closed_lipids = []
     close_amino_acids = []
+    frame_to_read = first_frame
 
     for ts in univers.trajectory:
-        prot = univers.select_atoms("segid %s"%segprot)
-        memb = univers.select_atoms("segid %s"%segmemb)
-        dist_mat = mda.analysis.distances.distance_array(prot.positions,memb.positions)
-        closed_lipids, close_amino_acids = ParseDistanceMatrix(dist_mat,psf_info,closed_lipids,close_amino_acids)
+        if ts.frame == frame_to_read and frame_to_read < last_frame:
+            prot = univers.select_atoms("segid %s"%segprot)
+            memb = univers.select_atoms("segid %s" %segmemb)
+            dist_mat = mda.analysis.distances.distance_array(prot.positions,memb.positions)
+            closed_lipids, close_amino_acids = ParseDistanceMatrix(dist_mat,psf_info,closed_lipids,close_amino_acids)
+            frame_to_read += 5*skip
 
 
     return closed_lipids,close_amino_acids

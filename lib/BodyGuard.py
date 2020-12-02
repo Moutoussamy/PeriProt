@@ -3,7 +3,8 @@
 import sys
 
 """
-BodyGuard will check input to kick you out if you do something wrong.
+BodyGuard will check inputs to kick you out if you do something wrong -.-'.
+e.g wrong file format
 """
 
 __author__ = "Emmanuel Edouard MOUTOUSSAMY"
