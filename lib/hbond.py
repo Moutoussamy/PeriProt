@@ -56,11 +56,11 @@ def CollectHbondCandInfo(libpath):
 
 def GetTimeSeries(psf,dcd,outname,libpath):
     """
-    Get time series from the MDanalysis
+    Get time series data for Hbond (MDanalysis)
     :param psf: PSF file
     :param dcd: trajectory file (DCD)
     :param outname: output name
-    :return: times series results
+    :return: times series results (Pandas dataframe)
     """
 
     donor, acceptor, head, glycerol, phos = CollectHbondCandInfo(libpath)
@@ -115,7 +115,7 @@ def ReadRwData(outname,times):
 
 def Occupancies(times_series_data,nbFrame):
     """
-    Caculate the occupancies of the hbonds
+    Calculate the occupancies of the different hbonds
     :param times_series_data: time series data from Gettime function
     :param nbFrame: number of frame in the trajectory
     :return: a dictionary; index = resid and value = occupancy

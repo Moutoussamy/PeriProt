@@ -23,7 +23,7 @@ AMINO_ACIDS = {'CYS': 'C', 'ASP': 'D', 'SER': 'S', 'GLN': 'Q', 'LYS': 'K',
 #CLASS FOR TOPOLOGY: PSF FILE
 class topology():
     """
-    Class containg information about the PSF file:
+    Class containing information about the PSF file:
     - Sequence
     - Membrane resid
     - Protein resid
