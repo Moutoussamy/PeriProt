@@ -13,6 +13,11 @@ import numpy as np
 import pandas as pd
 
 
+"""
+MACRODIPOLE OF THE PROTEIN CALCULATION 
+IT IS INTERESITING TO CALCULATE MACRODIPOLE FOR PMP
+"""
+
 __author__ = "Emmanuel Edouard MOUTOUSSAMY"
 __date__ = "2020/08"
 

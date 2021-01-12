@@ -14,8 +14,8 @@ __date__ = "2020/08"
 
 
 
-TYR = ["CG", "CZ", "CD1", "CD2", "CE2", "CE1"]
-TRP = ["CE3", "CD2", "CE2", "CZ2", "CH2", "CZ3"]
+TYR = ["CG", "CZ", "CD1", "CD2", "CE2", "CE1"] #aromatic atoms on tyrosine (CHARMM FF)
+TRP = ["CE3", "CD2", "CE2", "CZ2", "CH2", "CZ3"] #aromatic atoms on tryptophane (CHARMM FF)
 
 
 def IsTheAromClose(close_amino_acids,aromatics):

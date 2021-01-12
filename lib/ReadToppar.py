@@ -15,8 +15,8 @@ __date__ = "2020/08"
 def ReadTopparCharmm(toppar):
     """
     read the topology and make list of potential atom candidates for hydrophobic contact calculation
-    :param toppar:
-    :return:
+    :param toppar: topology file from CHARMM FF
+    :return: a list of hydrophobic candidate
     """
     residues = {}
     group = []
