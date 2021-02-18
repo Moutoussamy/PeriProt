@@ -115,6 +115,7 @@ def GetArgs():
     parser.add_argument('-out', type=str, default="periprot", help="output name")
     parser.add_argument('-pdb', type=str, default="None", help="PDB file")
     parser.add_argument('-mdipole',action='store_true', help="Macrodipole calculation")
+    parser.add_argument('-tres', action='store_true', help="target  some residues")
 
     args = parser.parse_args()
 
@@ -130,8 +131,32 @@ def done():
     print("...done")
 
 def write_close_partner(close_lipids, close_amino_acids,logfile):
+    """
+
+    :param close_lipids:
+    :param close_amino_acids:
+    :param logfile:
+    :return:
+    """
     logfile.write("lipids close to the protein: %s\n" % (" ".join(str(close_lipids))))
     logfile.write("residues close to the bilayer: %s\n" % (" ".join(str(close_amino_acids))))
+
+def DoYouWantToTargetRes(protresid,tres_flag):
+    """
+    check if targeting residues is requested
+    :param protresid: protein resid
+    :param tres_flag: tres flag
+    :return:
+    """
+
+    if tres_flag:
+        res_list = common.GetDesireResidueList()
+        return res_list
+
+    else:
+        return protresid
+
+
 
 
 if __name__ == '__main__':
@@ -145,7 +170,8 @@ if __name__ == '__main__':
 
     psf_info = common.topology(arguments.top, arguments.segmemb, arguments.segprot)
 
-
+    residues_list = DoYouWantToTargetRes(psf_info.protresid,arguments.tres)
+    print(residues_list)
 
     ### RESIDUES AT THE PROT/MEMB INTERFACE
     if arguments.hydro or arguments.hbond or arguments.catpi :
@@ -162,7 +188,8 @@ if __name__ == '__main__':
     ### HBOND ANALYSIS
     if arguments.hbond:
         print("Hbond network analysis...")
-        hb.runHbond(arguments.top,arguments.traj,arguments.out,psf_info.protresid,arguments.segprot,\
+
+        hb.runHbond(arguments.top,arguments.traj,arguments.out,residues_list,arguments.segprot,\
                     arguments.pdb,LIBPATH)
         done()
 

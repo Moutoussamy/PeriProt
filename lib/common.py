@@ -308,3 +308,37 @@ def obtainResInfo(atomid, NbAtomPerRes):
         if NbAtomPerRes[residue][0] < atomid < NbAtomPerRes[residue][1]:
             return str(residue)
             break
+
+
+
+def IsItAint(residue):
+    """
+    check if it a int
+    :param residue: a residue
+    :return: error if it is not a int
+    """
+    try:
+        float(residue)
+
+    except ValueError:
+        print("{0} is not a int and therefore can not be consider as a residue number".format(residue))
+
+def GetDesireResidueList():
+    """
+    Get list of residues from user input
+    :return: list of residues
+    """
+
+    list_of_residues = input("Which residues are you interested in ?\n")
+
+    residues_list = []
+
+    for residue in list_of_residues:
+        IsItAint(residue)
+        residues_list.append(int(residue))
+
+    residues_list = sorted(residues_list)
+
+    return residues_list
+
+
